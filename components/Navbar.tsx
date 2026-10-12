@@ -16,11 +16,11 @@ const navLinks = [
 const portalLinks = [
     {
         label: "SKK Migas",
-        href: "https://uat.digital-lfa.sustenv.com/login",
+        href: "https://www.skkmigas.go.id/",
     },
     {
-        label: "Kontraktor KKS",
-        href: "#portal-kontraktor",
+        label: "Digital LFA",
+        href: "https://uat.digital-lfa.sustenv.com/login",
     },
 ];
 
