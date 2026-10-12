@@ -1,26 +1,63 @@
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #f7f9fc;
+    --foreground: #142338;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-space-grotesk), sans-serif;
+    font-synthesis: none;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* SweetAlert2 */
+.swal-popup {
+    width: 22rem !important;
+    max-width: calc(100vw - 32px) !important;
+    border-radius: 1rem !important;
+    padding: 1.1rem !important;
+}
+
+.swal-title {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    margin-top: .25rem !important;
+}
+
+.swal-text {
+    font-size: .9rem !important;
+    line-height: 1.5 !important;
+}
+
+.swal-button {
+    border-radius: 10px !important;
+    padding: 8px 20px !important;
+    font-size: .9rem !important;
+    font-weight: 600 !important;
 }

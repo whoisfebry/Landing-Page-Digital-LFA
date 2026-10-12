@@ -1,0 +1,250 @@
+.accordion-gallery {
+    --ag-accent: #e0443b;
+    --ag-overlay: #111b2a;
+    --ag-text: #ffffff;
+    --ag-gap: 10px;
+    --ag-radius: 12px;
+    --ag-media-size: 320px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--ag-gap);
+
+    width: 100%;
+    max-width: 1080px;
+    height: var(--ag-gallery-height, 460px);
+    margin-inline: auto;
+
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
+}
+
+.ag-panel {
+    position: relative;
+    display: block;
+
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+    border: 1px solid rgba(20, 30, 45, 0.1);
+    border-radius: var(--ag-radius);
+
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    background: #111827;
+
+    transform-style: preserve-3d;
+    transform-origin: center center;
+    box-shadow: 0 10px 28px -18px rgba(0, 0, 0, 0.45);
+
+    will-change: flex-grow, transform;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ag-panel:focus-visible {
+    outline: 2px solid var(--ag-accent);
+    outline-offset: 3px;
+}
+
+.ag-panel__frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.ag-panel__media {
+    --ag-gray: 1;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: var(--ag-media-size);
+    height: 100%;
+
+    filter: grayscale(var(--ag-gray));
+    will-change: transform, filter;
+}
+
+.ag-panel__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    /*
+   * Menjaga proporsi foto dan mengisi kartu.
+   * Bagian foto yang tidak sesuai rasio kartu dapat terpotong.
+   */
+    object-fit: cover;
+    object-position: center;
+
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.ag-panel__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+
+    background:
+        linear-gradient(180deg,
+            transparent 35%,
+            color-mix(in srgb, var(--ag-overlay) 82%, transparent) 100%),
+        color-mix(in srgb,
+            var(--ag-overlay) calc(var(--ag-dim, 0.35) * 100%),
+            transparent);
+}
+
+.ag-panel__label {
+    position: absolute;
+    z-index: 2;
+    left: 16px;
+    right: 16px;
+    bottom: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    pointer-events: none;
+}
+
+.ag-panel__bar {
+    flex: 0 0 auto;
+    width: 3px;
+    height: 30px;
+    border-radius: 3px;
+
+    background: var(--ag-accent);
+    opacity: 0;
+}
+
+.ag-panel__label-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.ag-panel__text {
+    display: block;
+    color: var(--ag-text);
+
+    font-family: inherit;
+    font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+    font-weight: 600;
+    line-height: 1.35;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    opacity: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+.ag-panel__caption {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+/* Tablet */
+@media (min-width: 641px) and (max-width: 900px) {
+    .accordion-gallery {
+        height: min(var(--ag-gallery-height, 420px), 420px);
+    }
+
+    .ag-panel__label {
+        left: 12px;
+        right: 12px;
+        bottom: 14px;
+    }
+
+    .ag-panel__text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .accordion-gallery {
+        flex-direction: column;
+        gap: 8px;
+
+        width: 100%;
+        height: var(--ag-gallery-height, 430px);
+
+        perspective: none;
+    }
+
+    .ag-panel {
+        flex: 1 1 0;
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+
+        transform: none !important;
+    }
+
+    .ag-panel__media {
+        width: 100%;
+        height: 100%;
+    }
+
+    .ag-panel__media img {
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .ag-panel__label {
+        left: 14px;
+        right: 14px;
+        bottom: 12px;
+        gap: 8px;
+    }
+
+    .ag-panel__bar {
+        height: 24px;
+    }
+
+    .ag-panel__text {
+        font-size: 0.9rem;
+    }
+
+    .ag-panel__caption {
+        font-size: 0.72rem;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 380px) {
+    .accordion-gallery {
+        gap: 6px;
+    }
+
+    .ag-panel__label {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .ag-panel__text {
+        font-size: 0.82rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .ag-panel,
+    .ag-panel__media {
+        will-change: auto;
+    }
+}
