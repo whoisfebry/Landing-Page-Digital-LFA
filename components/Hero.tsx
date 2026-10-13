@@ -9,7 +9,7 @@ export default function Hero() {
         >
             {/* Background Image */}
             <img
-                src="/images/hero.webp"
+                src="/images/people.png"
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
@@ -57,14 +57,14 @@ export default function Hero() {
 
                     {/* Headline */}
                     <h2 className="mt-6 max-w-[510px] text-[clamp(1.125rem,2.5vw,1.75rem)] font-bold leading-snug tracking-[-0.025em] text-white sm:mt-8">
-                        Setiap program tercatat, dari rencana sampai hasil.
+                        Pengelolaan Program yang Terstruktur dan Transparan.
                     </h2>
 
                     {/* Description */}
                     <p className="mt-4 max-w-[490px] text-sm leading-6 text-white/75 sm:text-[15px] sm:leading-7">
-                        Setiap program dicatat dengan kerangka yang sama,
-                        dari rencana sampai hasil, sehingga dapat ditelusuri
-                        kembali.
+                        Digital LFA mendukung pencatatan dan penelusuran
+                        informasi program Pengembangan Masyarakat secara
+                        sistematis, mulai dari perencanaan hingga evaluasi.
                     </p>
 
                     {/* Action Buttons */}

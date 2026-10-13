@@ -8,6 +8,7 @@ import Untuksiapa from "@/components/Untuksiapa";
 import Manfaat from "@/components/Manfaat";
 import Pengelola from "@/components/Pengelola";
 import Footer from "@/components/Footer";
+import AIChatbot from "@/components/AIChatbot";
 
 export default function Home() {
     return (
@@ -20,6 +21,7 @@ export default function Home() {
             <Manfaat />
             <Pengelola />
             <Footer />
+            <AIChatbot />
         </main>
     );
 }
