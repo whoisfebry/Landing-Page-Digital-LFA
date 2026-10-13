@@ -1,136 +1,366 @@
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-function IndonesiaDotMap() {
-    const markers = [
-        { x: 12, y: 38, name: "Sumatera Utara", delay: 0.1 },
-        { x: 18, y: 57, name: "Sumatera Selatan", delay: 0.16 },
-        { x: 30, y: 72, name: "Jawa Barat", delay: 0.22 },
-        { x: 39, y: 75, name: "Jawa Timur", delay: 0.28 },
-        { x: 45, y: 43, name: "Kalimantan", delay: 0.34 },
-        { x: 58, y: 53, name: "Sulawesi", delay: 0.4 },
-        { x: 67, y: 70, name: "Nusa Tenggara", delay: 0.46 },
-        { x: 75, y: 48, name: "Maluku", delay: 0.52 },
-        { x: 88, y: 43, name: "Papua Barat", delay: 0.58 },
-        { x: 94, y: 48, name: "Papua", delay: 0.64 },
-    ];
+type SelectedRegion = {
+    name: string;
+    x: number;
+    y: number;
+};
 
+// Normalisasi nama provinsi dari SVG ke bahasa Indonesia.
+const provinceNames: Record<string, string> = {
+    "Aceh": "Aceh",
+    "Nanggroe Aceh Darussalam": "Aceh",
+    "North Sumatra": "Sumatera Utara",
+    "Sumatera Utara": "Sumatera Utara",
+    "West Sumatra": "Sumatera Barat",
+    "Sumatera Barat": "Sumatera Barat",
+    "Riau": "Riau",
+    "Riau Islands": "Kepulauan Riau",
+    "Kepulauan Riau": "Kepulauan Riau",
+    "Jambi": "Jambi",
+    "South Sumatra": "Sumatera Selatan",
+    "Sumatera Selatan": "Sumatera Selatan",
+    "Bengkulu": "Bengkulu",
+    "Lampung": "Lampung",
+    "Bangka Belitung": "Kepulauan Bangka Belitung",
+    "Bangka-Belitung": "Kepulauan Bangka Belitung",
+    "Bangka Belitung Islands": "Kepulauan Bangka Belitung",
+    "Kepulauan Bangka Belitung": "Kepulauan Bangka Belitung",
+
+    "Jakarta": "DKI Jakarta",
+    "Jakarta Raya": "DKI Jakarta",
+    "DKI Jakarta": "DKI Jakarta",
+    "Special Capital Region of Jakarta": "DKI Jakarta",
+    "Banten": "Banten",
+    "West Java": "Jawa Barat",
+    "Jawa Barat": "Jawa Barat",
+    "Central Java": "Jawa Tengah",
+    "Jawa Tengah": "Jawa Tengah",
+    "Yogyakarta": "DI Yogyakarta",
+    "Special Region of Yogyakarta": "DI Yogyakarta",
+    "Daerah Istimewa Yogyakarta": "DI Yogyakarta",
+    "East Java": "Jawa Timur",
+    "Jawa Timur": "Jawa Timur",
+
+    "West Kalimantan": "Kalimantan Barat",
+    "Kalimantan Barat": "Kalimantan Barat",
+    "Central Kalimantan": "Kalimantan Tengah",
+    "Kalimantan Tengah": "Kalimantan Tengah",
+    "South Kalimantan": "Kalimantan Selatan",
+    "Kalimantan Selatan": "Kalimantan Selatan",
+    "East Kalimantan": "Kalimantan Timur",
+    "Kalimantan Timur": "Kalimantan Timur",
+    "North Kalimantan": "Kalimantan Utara",
+    "North Kalimantan Province": "Kalimantan Utara",
+    "Kalimantan Utara": "Kalimantan Utara",
+
+    "Bali": "Bali",
+    "West Nusa Tenggara": "Nusa Tenggara Barat",
+    "Nusa Tenggara Barat": "Nusa Tenggara Barat",
+    "East Nusa Tenggara": "Nusa Tenggara Timur",
+    "Nusa Tenggara Timur": "Nusa Tenggara Timur",
+
+    "West Sulawesi": "Sulawesi Barat",
+    "Sulawesi Barat": "Sulawesi Barat",
+    "North Sulawesi": "Sulawesi Utara",
+    "Sulawesi Utara": "Sulawesi Utara",
+    "Central Sulawesi": "Sulawesi Tengah",
+    "Sulawesi Tengah": "Sulawesi Tengah",
+    "South Sulawesi": "Sulawesi Selatan",
+    "Sulawesi Selatan": "Sulawesi Selatan",
+    "Southeast Sulawesi": "Sulawesi Tenggara",
+    "Sulawesi Tenggara": "Sulawesi Tenggara",
+    "Gorontalo": "Gorontalo",
+
+    "Maluku": "Maluku",
+    "North Maluku": "Maluku Utara",
+    "Maluku Utara": "Maluku Utara",
+
+    "Papua": "Papua",
+    "West Papua": "Papua Barat",
+    "Papua Barat": "Papua Barat",
+    "Southwest Papua": "Papua Barat Daya",
+    "Papua Barat Daya": "Papua Barat Daya",
+    "Central Papua": "Papua Tengah",
+    "Papua Tengah": "Papua Tengah",
+    "Highland Papua": "Papua Pegunungan",
+    "Papua Pegunungan": "Papua Pegunungan",
+    "South Papua": "Papua Selatan",
+    "Papua Selatan": "Papua Selatan",
+};
+
+function normalizeProvinceName(rawName: string): string {
+    const cleanedName = rawName
+        .trim()
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ");
+
+    if (provinceNames[cleanedName]) {
+        return provinceNames[cleanedName];
+    }
+
+    const matchingKey = Object.keys(provinceNames).find(
+        (key) => key.toLowerCase() === cleanedName.toLowerCase()
+    );
+
+    return matchingKey
+        ? provinceNames[matchingKey]
+        : cleanedName;
+}
+
+function IndonesiaDotMap() {
     const reduceMotion = useReducedMotion();
-    const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+    const mapContainerRef = useRef<HTMLDivElement>(null);
+    const [svgMarkup, setSvgMarkup] = useState("");
+    const [selectedRegion, setSelectedRegion] =
+        useState<SelectedRegion | null>(null);
+    const [mapError, setMapError] = useState(false);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function loadMap() {
+            try {
+                const response = await fetch("/maps/indonesia.svg");
+
+                if (!response.ok) {
+                    throw new Error("File peta tidak ditemukan.");
+                }
+
+                const svgText = await response.text();
+                const parser = new DOMParser();
+                const parsedDocument = parser.parseFromString(
+                    svgText,
+                    "image/svg+xml"
+                );
+
+                if (
+                    parsedDocument.querySelector("parsererror") ||
+                    parsedDocument.documentElement.tagName.toLowerCase() !==
+                    "svg"
+                ) {
+                    throw new Error("Format SVG tidak valid.");
+                }
+
+                parsedDocument
+                    .querySelectorAll("script, foreignObject")
+                    .forEach((element) => element.remove());
+
+                const svg = parsedDocument.documentElement;
+
+                svg.setAttribute("width", "100%");
+                svg.setAttribute("height", "100%");
+                svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+                svg.style.display = "block";
+                svg.style.width = "100%";
+                svg.style.maxWidth = "100%";
+                svg.style.height = "auto";
+
+                parsedDocument
+                    .querySelectorAll("path, polygon")
+                    .forEach((element) => {
+                        element.setAttribute("fill", "#e2e8f0");
+                        element.setAttribute("stroke", "#ffffff");
+                        element.setAttribute("stroke-width", "0.7");
+                        element.setAttribute(
+                            "vector-effect",
+                            "non-scaling-stroke"
+                        );
+                        element.setAttribute("tabindex", "0");
+                        element.setAttribute("role", "button");
+                        element.setAttribute("cursor", "pointer");
+                        element.classList.add("province-region");
+                    });
+
+                if (!cancelled) {
+                    setSvgMarkup(
+                        new XMLSerializer().serializeToString(svg)
+                    );
+                    setMapError(false);
+                }
+            } catch (error) {
+                console.error("Gagal memuat peta Indonesia:", error);
+
+                if (!cancelled) {
+                    setMapError(true);
+                }
+            }
+        }
+
+        loadMap();
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    useEffect(() => {
+        const container = mapContainerRef.current;
+
+        if (!container || !svgMarkup) return;
+
+        const regions = Array.from(
+            container.querySelectorAll<SVGElement>(".province-region")
+        );
+
+        const getRegionName = (element: SVGElement) => {
+            const candidates = [
+                element.getAttribute("data-name"),
+                element.getAttribute("name"),
+                element.getAttribute("aria-label"),
+                element.getAttribute("title"),
+                element.getAttribute("id"),
+            ];
+
+            const rawName =
+                candidates.find(
+                    (value) => value && value.trim().length > 0
+                )?.trim() ?? "Wilayah Indonesia";
+
+            return normalizeProvinceName(rawName);
+        };
+
+        const updateRegion = (
+            element: SVGElement,
+            selected: boolean
+        ) => {
+            element.style.fill = selected ? "#dc2626" : "#e2e8f0";
+            element.style.stroke = selected ? "#991b1b" : "#ffffff";
+            element.style.strokeWidth = selected ? "1.2" : "0.7";
+        };
+
+        const handleEnter = (event: Event) => {
+            const element = event.currentTarget as SVGElement;
+
+            if (selectedRegion?.name !== getRegionName(element)) {
+                element.style.fill = "#fca5a5";
+            }
+        };
+
+        const handleLeave = (event: Event) => {
+            const element = event.currentTarget as SVGElement;
+
+            updateRegion(
+                element,
+                selectedRegion?.name === getRegionName(element)
+            );
+        };
+
+        const handleClick = (event: Event) => {
+            const element = event.currentTarget as SVGElement;
+            const mouseEvent = event as MouseEvent;
+            const name = getRegionName(element);
+            const rect = container.getBoundingClientRect();
+
+            if (selectedRegion?.name === name) {
+                setSelectedRegion(null);
+                return;
+            }
+
+            const x =
+                ((mouseEvent.clientX - rect.left) / rect.width) * 100;
+            const y =
+                ((mouseEvent.clientY - rect.top) / rect.height) * 100;
+
+            setSelectedRegion({
+                name,
+                x: Math.max(8, Math.min(92, x)),
+                y: Math.max(8, Math.min(92, y)),
+            });
+        };
+
+        const handleKeyDown = (event: Event) => {
+            const keyboardEvent = event as KeyboardEvent;
+
+            if (
+                keyboardEvent.key === "Enter" ||
+                keyboardEvent.key === " "
+            ) {
+                keyboardEvent.preventDefault();
+                handleClick(event);
+            }
+        };
+
+        regions.forEach((element) => {
+            element.style.transition = reduceMotion
+                ? "none"
+                : "fill 180ms ease, stroke 180ms ease";
+
+            element.addEventListener("mouseenter", handleEnter);
+            element.addEventListener("mouseleave", handleLeave);
+            element.addEventListener("click", handleClick);
+            element.addEventListener("keydown", handleKeyDown);
+
+            updateRegion(
+                element,
+                selectedRegion?.name === getRegionName(element)
+            );
+        });
+
+        return () => {
+            regions.forEach((element) => {
+                element.removeEventListener("mouseenter", handleEnter);
+                element.removeEventListener("mouseleave", handleLeave);
+                element.removeEventListener("click", handleClick);
+                element.removeEventListener("keydown", handleKeyDown);
+            });
+        };
+    }, [svgMarkup, selectedRegion, reduceMotion]);
 
     return (
         <motion.div
             className="relative w-full"
             role="group"
-            aria-label="Peta Indonesia dengan titik penanda wilayah kerja"
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.96, y: 18 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
+            aria-label="Peta Indonesia berdasarkan wilayah"
+            initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+            whileInView={
+                reduceMotion ? undefined : { opacity: 1, y: 0 }
+            }
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
         >
-            <img
-                src="https://commons.wikimedia.org/wiki/Special:FilePath/Indonesia_Blankmap.svg"
-                alt="Peta Indonesia"
-                draggable={false}
-                className="block h-auto w-full select-none opacity-65"
-                style={{
-                    filter:
-                        "brightness(0) saturate(100%) invert(67%) sepia(8%) saturate(390%) hue-rotate(172deg) brightness(91%) contrast(86%)",
+            <div
+                ref={mapContainerRef}
+                className="relative flex min-h-[220px] w-full items-center justify-center sm:min-h-[300px]"
+                onClick={(event) => {
+                    if (event.target === event.currentTarget) {
+                        setSelectedRegion(null);
+                    }
                 }}
+                dangerouslySetInnerHTML={{ __html: svgMarkup }}
             />
 
-            <div className="absolute inset-0">
-                {markers.map(({ x, y, name }) => {
-                    const isSelected = selectedRegion === name;
+            {mapError && (
+                <p className="py-8 text-center text-sm text-red-600">
+                    Peta tidak dapat dimuat. Pastikan file
+                    {" "}public/maps/indonesia.svg tersedia.
+                </p>
+            )}
 
-                    return (
-                        <motion.div
-                            key={name}
-                            className="group absolute -translate-x-1/2 -translate-y-1/2"
-                            style={{ left: `${x}%`, top: `${y}%` }}
-                        >
-                            <span
-                                aria-hidden="true"
-                                className={`pointer-events-none absolute inset-0 rounded-full ${isSelected && !reduceMotion
-                                    ? "animate-[ripple_1.8s_ease-out_infinite]"
-                                    : "opacity-0"
-                                    }`}
-                                style={{
-                                    backgroundColor: "rgba(220,38,38,0.35)",
-                                }}
-                            />
-
-                            <span
-                                aria-hidden="true"
-                                className={`pointer-events-none absolute inset-0 rounded-full ${isSelected && !reduceMotion
-                                    ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
-                                    : "opacity-0"
-                                    }`}
-                                style={{
-                                    backgroundColor: "rgba(220,38,38,0.25)",
-                                }}
-                            />
-
-                            <motion.button
-                                type="button"
-                                aria-label={`Pilih wilayah: ${name}`}
-                                aria-pressed={isSelected}
-                                title={name}
-                                onClick={() =>
-                                    setSelectedRegion(isSelected ? null : name)
-                                }
-                                whileHover={
-                                    reduceMotion ? undefined : { scale: 1.15 }
-                                }
-                                whileTap={
-                                    reduceMotion ? undefined : { scale: 0.95 }
-                                }
-                                animate={{
-                                    backgroundColor: "#dc2626",
-                                    boxShadow: isSelected
-                                        ? "0 0 0 3px rgba(220,38,38,0.2), 0 0 8px 2px rgba(220,38,38,0.35)"
-                                        : "0 0 0 3px rgba(220,38,38,0.14)",
-                                    scale: isSelected ? 1.05 : 1,
-                                }}
-                                transition={{
-                                    duration: reduceMotion ? 0 : 0.2,
-                                    ease: "easeOut",
-                                }}
-                                className="relative z-[1] block h-3 w-3 cursor-pointer rounded-full border-2 border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 sm:h-3.5 sm:w-3.5"
-                            />
-
-                            <span
-                                role="tooltip"
-                                className={`pointer-events-none absolute bottom-[calc(100%+10px)] left-1/2 z-20 w-max max-w-40 -translate-x-1/2 rounded-lg bg-slate-900 px-3 py-2 text-xs font-medium text-white shadow-lg transition duration-150 ${isSelected
-                                    ? "opacity-100"
-                                    : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
-                                    }`}
-                            >
-                                {name}
-                                <span
-                                    aria-hidden="true"
-                                    className="absolute left-1/2 top-full -translate-x-1/2 border-[5px] border-transparent border-t-slate-900"
-                                />
-                            </span>
-                        </motion.div>
-                    );
-                })}
-            </div>
-
-            <style jsx>{`
-                @keyframes ripple {
-                    0% {
-                        transform: scale(1);
-                        opacity: 0.65;
-                    }
-                    100% {
-                        transform: scale(3.5);
-                        opacity: 0;
-                    }
-                }
-            `}</style>
+            {selectedRegion && (
+                <div
+                    role="status"
+                    className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap"
+                    style={{
+                        left: `${selectedRegion.x}%`,
+                        top: `${selectedRegion.y}%`,
+                    }}
+                >
+                    <span
+                        className="text-xs font-bold text-white sm:text-sm"
+                        style={{
+                            textShadow:
+                                "0 1px 3px rgba(15,23,42,0.95), 0 0 5px rgba(15,23,42,0.75)",
+                        }}
+                    >
+                        {selectedRegion.name}
+                    </span>
+                </div>
+            )}
         </motion.div>
     );
 }
@@ -188,7 +418,6 @@ export default function Tentang() {
 
     return (
         <main className="relative isolate overflow-hidden bg-white">
-            {/* BAGIAN 1: TENTANG DIGITAL LFA */}
             <section
                 id="tentang"
                 aria-labelledby="tentang-title"
@@ -219,21 +448,24 @@ export default function Tentang() {
                             yang terjadi di lapangan dapat ditelusuri kembali.
                         </p>
                     </motion.div>
-
+                    
                     <motion.div
-                        {...reveal(0.18)}
-                        className="relative mx-auto w-full max-w-[560px] lg:ml-auto"
+                        {...reveal(0.18)}    
+                        className="relative mx-auto w-[115%] max-w-[680px] -translate-x-[6.5%] -mt-8 sm:mt-0 sm:w-full sm:translate-x-0 lg:ml-auto"
                     >
                         <IndonesiaDotMap />
 
-                        <p className="mt-1 text-center text-[10px] font-medium uppercase tracking-[0.18em] text-slate-400 lg:text-right">
-                            Satu standar · Berbagai wilayah kerja
-                        </p>
+                        <div className="-mt-8 flex items-center justify-end gap-2 pr-6 text-[9px] font-medium text-slate-400 sm:-mt-6 sm:pr-4 sm:text-[10px] lg:-mt-8 lg:pr-8">
+                            <span className="h-2.5 w-2.5 shrink-0 rounded-sm bg-slate-200" />
+                            <span>Wilayah</span>
+
+                            <span className="ml-2 h-2.5 w-2.5 shrink-0 rounded-sm bg-red-600 sm:ml-3" />
+                            <span>Wilayah dipilih</span>
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
-            {/* BAGIAN 2: BAGAIMANA LFA BEKERJA */}
             <section
                 aria-labelledby="alur-lfa-title"
                 className="relative bg-slate-100 px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-18"
@@ -262,7 +494,6 @@ export default function Tentang() {
                             </p>
                         </div>
 
-                        {/* TIMELINE INTERAKTIF */}
                         <div className="relative mt-9 sm:mt-12">
                             <div
                                 aria-hidden="true"
@@ -336,14 +567,13 @@ export default function Tentang() {
                                             {...reveal(index * 0.08)}
                                             className="relative min-w-0"
                                         >
-                                            {/* TITIK TIMELINE */}
                                             <div className="relative z-10 mb-2 flex items-center gap-3 md:mb-4 md:justify-center">
                                                 <span className="relative block h-[11px] w-[11px] shrink-0">
                                                     <span
                                                         aria-hidden="true"
                                                         className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
-                                                            ? "animate-[ripple_1.8s_ease-out_infinite]"
-                                                            : "opacity-0"
+                                                                ? "animate-[ripple_1.8s_ease-out_infinite]"
+                                                                : "opacity-0"
                                                             }`}
                                                         style={{
                                                             backgroundColor:
@@ -354,8 +584,8 @@ export default function Tentang() {
                                                     <span
                                                         aria-hidden="true"
                                                         className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
-                                                            ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
-                                                            : "opacity-0"
+                                                                ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
+                                                                : "opacity-0"
                                                             }`}
                                                         style={{
                                                             backgroundColor:
@@ -390,11 +620,10 @@ export default function Tentang() {
                                                 </span>
                                             </div>
 
-                                            {/* KARTU TAHAP */}
                                             <div
                                                 className={`group relative ml-6 flex min-h-[155px] w-[calc(100%-1.5rem)] flex-col rounded-xl border bg-white p-4 transition-colors duration-300 sm:min-h-[170px] sm:p-5 md:ml-0 md:min-h-[205px] md:w-full md:p-4 lg:min-h-[190px] lg:p-5 ${isActive
-                                                    ? "border-red-200"
-                                                    : "border-slate-200 hover:border-red-200"
+                                                        ? "border-red-200"
+                                                        : "border-slate-200 hover:border-red-200"
                                                     }`}
                                             >
                                                 <button
@@ -409,19 +638,18 @@ export default function Tentang() {
                                                     <div className="flex w-full items-start justify-between gap-2">
                                                         <span
                                                             className={`text-2xl font-bold leading-none tracking-[-0.045em] transition-colors duration-300 sm:text-3xl md:text-4xl ${isReached
-                                                                ? "text-red-600"
-                                                                : "text-slate-300 group-hover:text-red-600"
+                                                                    ? "text-red-600"
+                                                                    : "text-slate-300 group-hover:text-red-600"
                                                                 }`}
                                                         >
                                                             {stage.number}
                                                         </span>
 
-                                                        {/* IKON TAHAP */}
                                                         <span
                                                             aria-hidden="true"
                                                             className={`mt-0.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] transition-colors duration-300 sm:h-6 sm:w-6 sm:text-xs ${showGreenCheck
-                                                                ? "bg-emerald-600 text-white"
-                                                                : "bg-slate-100 text-slate-400"
+                                                                    ? "bg-emerald-600 text-white"
+                                                                    : "bg-slate-100 text-slate-400"
                                                                 }`}
                                                         >
                                                             {showGreenCheck
@@ -432,8 +660,8 @@ export default function Tentang() {
 
                                                     <h3
                                                         className={`mt-3 text-[13px] font-bold tracking-tight sm:mt-4 sm:text-sm md:text-base ${isReached
-                                                            ? "text-slate-900"
-                                                            : "text-slate-700"
+                                                                ? "text-slate-900"
+                                                                : "text-slate-700"
                                                             }`}
                                                     >
                                                         {stage.title}
@@ -444,16 +672,15 @@ export default function Tentang() {
                                                     </p>
                                                 </button>
 
-                                                {/* STATUS DAN TOMBOL SELESAI */}
                                                 <div className="mt-auto flex items-center justify-between gap-2 pt-3 sm:pt-4">
                                                     <span
                                                         className={`text-[9px] font-semibold uppercase tracking-[0.1em] sm:text-[10px] sm:tracking-[0.12em] ${isCompleted
-                                                            ? "text-emerald-600"
-                                                            : isActive
-                                                                ? "text-red-600"
-                                                                : isReached
-                                                                    ? "text-emerald-600"
-                                                                    : "text-slate-400"
+                                                                ? "text-emerald-600"
+                                                                : isActive
+                                                                    ? "text-red-600"
+                                                                    : isReached
+                                                                        ? "text-emerald-600"
+                                                                        : "text-slate-400"
                                                             }`}
                                                     >
                                                         {isCompleted
@@ -491,13 +718,13 @@ export default function Tentang() {
                 </div>
             </section>
 
-            {/* ANIMASI GELOMBANG */}
             <style jsx>{`
                 @keyframes ripple {
                     0% {
                         transform: scale(1);
                         opacity: 0.65;
                     }
+
                     100% {
                         transform: scale(3.5);
                         opacity: 0;

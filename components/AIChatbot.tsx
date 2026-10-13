@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import {
     ChevronDown,
@@ -43,7 +44,8 @@ const initialMessage: Message = {
 
 export default function AIChatbot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [showTip, setShowTip] = useState(true);
+    const [showTip, setShowTip] = useState(false);
+    const [hasReachedFooter, setHasReachedFooter] = useState(false);
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<Message[]>([
         initialMessage,
@@ -53,7 +55,39 @@ export default function AIChatbot() {
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const shouldReduceMotion = useReducedMotion();
 
+    // Tampilkan notifikasi hanya ketika Footer terlihat.
+    useEffect(() => {
+        const footer =
+            document.getElementById("footer") ??
+            document.querySelector("footer");
+
+        if (!footer) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                const isFooterVisible = entry.isIntersecting;
+
+                if (isFooterVisible) {
+                    setHasReachedFooter(true);
+                }
+
+                setShowTip(
+                    isFooterVisible && !isOpen
+                );
+            },
+            {
+                threshold: 0.1,
+            }
+        );
+
+        observer.observe(footer);
+
+        return () => observer.disconnect();
+    }, [isOpen]);
+
+    // Gulir otomatis ke pesan terbaru.
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({
             behavior: "smooth",
@@ -61,12 +95,17 @@ export default function AIChatbot() {
         });
     }, [messages, isOpen]);
 
+    // Fokuskan input ketika chatbot dibuka.
     useEffect(() => {
         if (isOpen) {
             inputRef.current?.focus();
             setShowTip(false);
+        } else if (hasReachedFooter) {
+            // Setelah Footer pernah dicapai, tombol chatbot
+            // tetap dapat dibuka tanpa memunculkan tip terus-menerus.
+            setShowTip(false);
         }
-    }, [isOpen]);
+    }, [isOpen, hasReachedFooter]);
 
     function sendMessage(text: string) {
         const trimmedText = text.trim();
@@ -105,6 +144,7 @@ export default function AIChatbot() {
                 time: getCurrentTime(),
             },
         ]);
+
         setInput("");
         setShowSuggestions(true);
         setNextId(2);
@@ -112,36 +152,60 @@ export default function AIChatbot() {
 
     return (
         <>
-            {/* Balon bantuan */}
-            {!isOpen && showTip && (
-                <div className="fixed bottom-[82px] right-[70px] z-[99] flex max-w-[265px] items-center gap-2 rounded-2xl bg-red-600 px-4 py-3 text-white shadow-lg sm:bottom-[85px] sm:right-[84px]">
-                    <Headset
-                        size={18}
-                        className="shrink-0"
-                    />
-
-                    <button
-                        type="button"
-                        onClick={() => setIsOpen(true)}
-                        className="cursor-pointer text-left text-xs font-semibold leading-relaxed"
+            {/* Balon bantuan: muncul saat Footer terlihat */}
+            <AnimatePresence>
+                {!isOpen && showTip && (
+                    <motion.div
+                        key="chatbot-tip"
+                        initial={{
+                            opacity: 0,
+                            y: shouldReduceMotion ? 0 : 12,
+                            scale: shouldReduceMotion ? 1 : 0.96,
+                        }}
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                        }}
+                        exit={{
+                            opacity: 0,
+                            y: shouldReduceMotion ? 0 : 8,
+                            scale: shouldReduceMotion ? 1 : 0.98,
+                        }}
+                        transition={{
+                            duration: shouldReduceMotion ? 0 : 0.3,
+                            ease: "easeOut",
+                        }}
+                        className="fixed bottom-[82px] right-[70px] z-[99] flex max-w-[265px] items-center gap-2 rounded-2xl bg-red-600 px-4 py-3 text-white shadow-lg sm:bottom-[85px] sm:right-[84px]"
                     >
-                        Butuh bantuan? Chat dengan Asisten Digital LFA.
-                    </button>
+                        <Headset
+                            size={18}
+                            className="shrink-0"
+                        />
 
-                    <button
-                        type="button"
-                        onClick={() => setShowTip(false)}
-                        aria-label="Tutup pesan bantuan"
-                        title="Tutup pesan bantuan"
-                        className="ml-1 shrink-0 cursor-pointer rounded p-1 transition hover:bg-white/15"
-                    >
-                        <X size={15} strokeWidth={3} />
-                    </button>
+                        <button
+                            type="button"
+                            onClick={() => setIsOpen(true)}
+                            className="cursor-pointer text-left text-xs font-semibold leading-relaxed"
+                        >
+                            Butuh bantuan? Chat dengan Asisten Digital LFA.
+                        </button>
 
-                    {/* Ekor balon */}
-                    <span className="pointer-events-none absolute -bottom-[6px] right-5 h-3 w-3 rotate-45 bg-red-600 sm:-right-[6px] sm:bottom-4" />
-                </div>
-            )}
+                        <button
+                            type="button"
+                            onClick={() => setShowTip(false)}
+                            aria-label="Tutup pesan bantuan"
+                            title="Tutup pesan bantuan"
+                            className="ml-1 shrink-0 cursor-pointer rounded p-1 transition hover:bg-white/15"
+                        >
+                            <X size={15} strokeWidth={3} />
+                        </button>
+
+                        {/* Ekor balon */}
+                        <span className="pointer-events-none absolute -bottom-[6px] right-5 h-3 w-3 rotate-45 bg-red-600 sm:-right-[6px] sm:bottom-4" />
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Tombol chatbot mengambang */}
             <button
