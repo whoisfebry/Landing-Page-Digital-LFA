@@ -40,7 +40,7 @@ export default function Tujuan() {
         <section
             id="tujuan"
             aria-labelledby="tujuan-title"
-            className="relative isolate overflow-hidden bg-white px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24"
+            className="relative isolate overflow-hidden scroll-mt-15 bg-white px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24"
         >
             <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-20">
                 {/* Kolom kiri: tujuan utama */}

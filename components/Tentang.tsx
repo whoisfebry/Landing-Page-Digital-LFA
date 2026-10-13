@@ -192,7 +192,7 @@ export default function Tentang() {
             <section
                 id="tentang"
                 aria-labelledby="tentang-title"
-                className="relative bg-white px-6 pt-16 pb-16 sm:px-10 sm:pt-20 sm:pb-20 lg:px-16 lg:pt-24 lg:pb-24"
+                className="relative scroll-mt-15 bg-white px-6 pt-16 pb-16 sm:px-10 sm:pt-20 sm:pb-20 lg:px-16 lg:pt-24 lg:pb-24"
             >
                 <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-10 xl:grid-cols-[0.9fr_1.1fr] xl:gap-12">
                     <motion.div

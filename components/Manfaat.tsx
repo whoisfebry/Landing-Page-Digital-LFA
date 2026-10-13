@@ -70,7 +70,7 @@ export default function Manfaat() {
             <section
                 id="manfaat"
                 aria-labelledby="manfaat-title"
-                className="relative px-6 pb-12 pt-16 sm:px-10 sm:pb-16 sm:pt-20 lg:px-16 lg:pb-20 lg:pt-24"
+                className="relative scroll-mt-15 px-6 pb-12 pt-16 sm:px-10 sm:pb-16 sm:pt-20 lg:px-16 lg:pb-20 lg:pt-24"
             >
                 <div className="mx-auto w-full max-w-7xl">
                     <motion.div

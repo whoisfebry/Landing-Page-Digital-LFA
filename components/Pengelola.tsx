@@ -45,7 +45,7 @@ export default function Pengelola() {
         <section
             id="pengelola"
             aria-labelledby="pengelola-title"
-            className="relative isolate overflow-hidden bg-white px-6 py-14 sm:px-10 sm:py-16 lg:px-16 lg:py-20"
+            className="relative isolate overflow-hidden bg-white scroll-mt-15 px-6 py-14 sm:px-10 sm:py-16 lg:px-16 lg:py-20"
         >
             <div className="mx-auto w-full max-w-7xl">
                 {/* WRAPPER CARD DAN OUTLINE */}

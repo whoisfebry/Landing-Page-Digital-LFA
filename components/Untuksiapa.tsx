@@ -52,7 +52,7 @@ export default function Untuksiapa() {
         <section
             id="untuk-siapa"
             aria-labelledby="untuk-siapa-title"
-            className="relative isolate overflow-hidden bg-slate-100 px-5 py-10 sm:px-8 sm:py-12 lg:py-14"
+            className="relative isolate scroll-mt-15 overflow-hidden bg-slate-100 px-5 py-10 sm:scroll-mt-28 sm:px-8 sm:py-12 lg:scroll-mt-32 lg:py-14"
         >
             <div className="mx-auto w-full max-w-6xl">
                 {/* Judul dan deskripsi */}
