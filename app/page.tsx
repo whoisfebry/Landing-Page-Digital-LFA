@@ -9,10 +9,12 @@ import Manfaat from "@/components/Manfaat";
 import Pengelola from "@/components/Pengelola";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import Preloader from "@/components/Preloader";
 
 export default function Home() {
     return (
         <main>
+            <Preloader />
             <Navbar />
             <Hero />
             <Tentang />

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
 
 export default function Hero() {
     return (
