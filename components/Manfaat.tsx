@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -6,7 +5,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import AccordionGallery, {
     type AccordionGalleryItem,
 } from "./AccordionGallery";
-
 
 const benefits = [
     {
@@ -54,15 +52,15 @@ export default function Manfaat() {
         reduceMotion
             ? {}
             : {
-                initial: { opacity: 0, y: 16 },
-                whileInView: { opacity: 1, y: 0 },
-                viewport: { once: true, amount: 0.2 },
-                transition: {
-                    duration: 0.55,
-                    delay,
-                    ease: "easeOut" as const,
-                },
-            };
+                  initial: { opacity: 0, y: 16 },
+                  whileInView: { opacity: 1, y: 0 },
+                  viewport: { once: true, amount: 0.2 },
+                  transition: {
+                      duration: 0.55,
+                      delay,
+                      ease: "easeOut" as const,
+                  },
+              };
 
     return (
         <main className="relative isolate overflow-hidden bg-white">
@@ -94,7 +92,7 @@ export default function Manfaat() {
                         {/* Foto */}
                         <motion.figure
                             {...reveal(0.1)}
-                            className="group relative min-w-0 mt-8 lg:mt-10"
+                            className="group relative mt-8 min-w-0 lg:mt-10"
                         >
                             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100">
                                 <Image
@@ -140,12 +138,10 @@ export default function Manfaat() {
                                     className="group relative overflow-hidden rounded-lg border border-slate-200/80 bg-white p-4 transition-all duration-300 hover:border-red-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.05)] sm:p-5"
                                 >
                                     <div className="flex items-start gap-3.5">
-                                        {/* Nomor */}
                                         <span className="shrink-0 text-lg font-semibold leading-none tracking-[-0.05em] text-slate-200 transition-colors duration-300 group-hover:text-red-600 sm:text-xl">
                                             {benefit.number}
                                         </span>
 
-                                        {/* Judul dan deskripsi sejajar dengan nomor */}
                                         <div className="min-w-0 flex-1">
                                             <h3 className="text-sm font-bold leading-snug tracking-[-0.02em] text-slate-900 sm:text-base">
                                                 {benefit.title}
@@ -169,55 +165,58 @@ export default function Manfaat() {
             <section
                 id="jejak-program"
                 aria-labelledby="jejak-program-title"
-                className="relative bg-slate-100 px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-16"
+                className="relative isolate scroll-mt-15 overflow-hidden bg-white px-0 py-0 sm:scroll-mt-28 lg:scroll-mt-32"
             >
-                <div className="mx-auto w-full max-w-7xl">
-                    {/* Judul dan keterangan di tengah */}
-                    <motion.div
-                        {...reveal(0)}
-                        className="text-center"
-                    >
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">
-                            Jejak Program
-                        </p>
-
-                        <h2
-                            id="jejak-program-title"
-                            className="mt-3 text-[clamp(1rem,1.6vw,1.3rem)] font-bold leading-[1.4] tracking-[-0.03em] text-slate-900"
+                {/* Background abu-abu dengan sudut rounded */}
+                <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-8 sm:rounded-[36px] sm:px-8 sm:py-10 lg:rounded-[44px] lg:px-12 lg:py-12">
+                    <div className="mx-auto w-full max-w-7xl">
+                        {/* Judul dan keterangan di tengah */}
+                        <motion.div
+                            {...reveal(0)}
+                            className="text-center"
                         >
-                            Tercatat di lapangan, bukan hanya di berkas.
-                        </h2>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">
+                                Jejak Program
+                            </p>
 
-                        <p className="mx-auto mt-2 max-w-md text-[10px] leading-5 text-slate-500 sm:text-[11px]">
-                            Dokumentasi kegiatan di wilayah kerja
-                        </p>
-                    </motion.div>
+                            <h2
+                                id="jejak-program-title"
+                                className="mt-3 text-[clamp(1rem,1.6vw,1.3rem)] font-bold leading-[1.4] tracking-[-0.03em] text-slate-900"
+                            >
+                                Tercatat di lapangan, bukan hanya di berkas.
+                            </h2>
 
-                    {/* Accordion Gallery ReactBits */}
-                    <motion.div
-                        {...reveal(0.12)}
-                        className="mt-7 sm:mt-9"
-                    >
-                        <AccordionGallery
-                            items={programGallery}
-                            defaultIndex={0}
-                            expandRatio={0.58}
-                            trigger="hover"
-                            accentColor="#e0443b"
-                            overlayColor="#111b2a"
-                            textColor="#ffffff"
-                            grayscale
-                            showLabels
-                            duration={0.6}
-                            ease="power3.out"
-                            parallax={0.2}
-                            tilt={0}
-                            stagger={0.06}
-                            height={460}
-                            gap={10}
-                            radius={12}
-                        />
-                    </motion.div>
+                            <p className="mx-auto mt-2 max-w-md text-[10px] leading-5 text-slate-500 sm:text-[11px]">
+                                Dokumentasi kegiatan di wilayah kerja
+                            </p>
+                        </motion.div>
+
+                        {/* Accordion Gallery ReactBits */}
+                        <motion.div
+                            {...reveal(0.12)}
+                            className="mt-7 sm:mt-9"
+                        >
+                            <AccordionGallery
+                                items={programGallery}
+                                defaultIndex={0}
+                                expandRatio={0.58}
+                                trigger="hover"
+                                accentColor="#e0443b"
+                                overlayColor="#111b2a"
+                                textColor="#ffffff"
+                                grayscale
+                                showLabels
+                                duration={0.6}
+                                ease="power3.out"
+                                parallax={0.2}
+                                tilt={0}
+                                stagger={0.06}
+                                height={460}
+                                gap={10}
+                                radius={12}
+                            />
+                        </motion.div>
+                    </div>
                 </div>
             </section>
         </main>

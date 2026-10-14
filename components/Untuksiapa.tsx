@@ -1,3 +1,4 @@
+
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
@@ -52,67 +53,70 @@ export default function Untuksiapa() {
         <section
             id="untuk-siapa"
             aria-labelledby="untuk-siapa-title"
-            className="relative isolate scroll-mt-15 overflow-hidden bg-slate-100 px-5 py-10 sm:scroll-mt-28 sm:px-8 sm:py-12 lg:scroll-mt-32 lg:py-14"
+            className="relative isolate scroll-mt-15 overflow-hidden bg-white px-0 py-0 sm:scroll-mt-28 lg:scroll-mt-32"
         >
-            <div className="mx-auto w-full max-w-6xl">
-                {/* Judul dan deskripsi */}
-                <motion.div
-                    {...reveal(0)}
-                    className="mx-auto max-w-3xl text-center"
-                >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">
-                        Untuk Siapa
-                    </p>
-
-                    <h2
-                        id="untuk-siapa-title"
-                        className="mx-auto mt-4 max-w-3xl text-[clamp(0.875rem,1.2vw,1.1rem)] font-medium leading-[1.65] tracking-[-0.02em] text-slate-700"
+            {/* PANEL ABU-ABU FULL WIDTH */}
+            <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-10 sm:rounded-[36px] sm:px-8 sm:py-12 lg:rounded-[44px] lg:px-12 lg:py-14">
+                <div className="mx-auto w-full max-w-6xl">
+                    {/* JUDUL DAN DESKRIPSI */}
+                    <motion.div
+                        {...reveal(0)}
+                        className="mx-auto max-w-3xl text-center"
                     >
-                        Digital LFA digunakan bersama oleh SKK Migas sebagai
-                        pengawas dan Kontraktor Kontrak Kerja Sama sebagai
-                        pelaksana di lapangan.
-                    </h2>
-                </motion.div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">
+                            Untuk Siapa
+                        </p>
 
-                {/* Kartu pengguna dan fungsi pendukung */}
-                <div className="mx-auto mt-7 grid w-full max-w-5xl grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
-                    {audiences.map((audience, index) => {
-                        const Icon = audience.icon;
+                        <h2
+                            id="untuk-siapa-title"
+                            className="mx-auto mt-4 max-w-3xl text-[clamp(0.875rem,1.2vw,1.1rem)] font-medium leading-[1.65] tracking-[-0.02em] text-slate-700"
+                        >
+                            Digital LFA digunakan bersama oleh SKK Migas
+                            sebagai pengawas dan Kontraktor Kontrak Kerja Sama
+                            sebagai pelaksana di lapangan.
+                        </h2>
+                    </motion.div>
 
-                        return (
-                            <motion.article
-                                key={audience.number}
-                                {...reveal(0.1 + index * 0.12)}
-                                className="group flex min-h-[175px] flex-col rounded-xl border border-slate-200 bg-white p-5 transition-colors duration-300 hover:border-red-500 sm:min-h-[190px] sm:p-6"
-                            >
-                                {/* Ikon dan nomor */}
-                                <div className="flex items-center justify-between">
-                                    <span
-                                        aria-hidden="true"
-                                        className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors duration-300 group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white"
-                                    >
-                                        <Icon
-                                            size={18}
-                                            strokeWidth={1.8}
-                                        />
-                                    </span>
+                    {/* KARTU PENGGUNA DAN FUNGSI PENDUKUNG */}
+                    <div className="mx-auto mt-7 grid w-full max-w-5xl grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                        {audiences.map((audience, index) => {
+                            const Icon = audience.icon;
 
-                                    <span className="text-[10px] font-medium tracking-[0.12em] text-slate-300 transition-colors duration-300 group-hover:text-red-600">
-                                        {audience.number}
-                                    </span>
-                                </div>
+                            return (
+                                <motion.article
+                                    key={audience.number}
+                                    {...reveal(0.1 + index * 0.12)}
+                                    className="group flex min-h-[175px] flex-col rounded-xl border border-slate-200 bg-white p-5 transition-colors duration-300 hover:border-red-500 sm:min-h-[190px] sm:p-6"
+                                >
+                                    {/* IKON DAN NOMOR */}
+                                    <div className="flex items-center justify-between">
+                                        <span
+                                            aria-hidden="true"
+                                            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 transition-colors duration-300 group-hover:border-red-600 group-hover:bg-red-600 group-hover:text-white"
+                                        >
+                                            <Icon
+                                                size={18}
+                                                strokeWidth={1.8}
+                                            />
+                                        </span>
 
-                                {/* Isi kartu */}
-                                <h3 className="mt-4 text-sm font-bold leading-6 tracking-[-0.02em] text-slate-800 sm:text-[15px]">
-                                    {audience.title}
-                                </h3>
+                                        <span className="text-[10px] font-medium tracking-[0.12em] text-slate-300 transition-colors duration-300 group-hover:text-red-600">
+                                            {audience.number}
+                                        </span>
+                                    </div>
 
-                                <p className="mt-2 text-xs leading-6 text-slate-500 sm:text-[13px]">
-                                    {audience.description}
-                                </p>
-                            </motion.article>
-                        );
-                    })}
+                                    {/* ISI KARTU */}
+                                    <h3 className="mt-4 text-sm font-bold leading-6 tracking-[-0.02em] text-slate-800 sm:text-[15px]">
+                                        {audience.title}
+                                    </h3>
+
+                                    <p className="mt-2 text-xs leading-6 text-slate-500 sm:text-[13px]">
+                                        {audience.description}
+                                    </p>
+                                </motion.article>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         </section>
