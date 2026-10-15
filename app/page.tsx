@@ -10,6 +10,7 @@ import Pengelola from "@/components/Pengelola";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Preloader from "@/components/Preloader";
+import Statistik from "@/components/Statistik";
 
 export default function Home() {
     return (
@@ -22,6 +23,7 @@ export default function Home() {
             <Untuksiapa />
             <Manfaat />
             <Pengelola />
+            <Statistik />
             <Footer />
             <AIChatbot />
         </main>

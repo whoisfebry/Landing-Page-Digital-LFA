@@ -155,7 +155,7 @@ export default function Footer() {
                                 rel="noopener noreferrer"
                                 aria-label={social.label}
                                 title={social.label}
-                                className="group flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-white/15 bg-white/[0.03] text-slate-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#315bd6] hover:bg-[#315bd6] hover:text-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315bd6] focus-visible:ring-offset-2 focus-visible:ring-offset-[#06132f] sm:h-11 sm:w-11"
+                                className="group flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-white/15 bg-white/[0.03] text-slate-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-red-600 hover:bg-red-600 hover:text-white hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 focus-visible:ring-offset-[#06132f] sm:h-11 sm:w-11"
                             >
                                 <svg
                                     viewBox="0 0 24 24"
@@ -347,7 +347,7 @@ export default function Footer() {
 
                             <button
                                 type="submit"
-                                className="inline-flex h-9 w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#315bd6] px-4 text-[11px] font-semibold text-white transition-colors hover:bg-[#416be7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#06132f]"
+                                className="inline-flex h-9 w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-red-600 px-4 text-[11px] font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#06132f]"
                             >
                                 <Mail size={12} />
                                 Daftar Newsletter

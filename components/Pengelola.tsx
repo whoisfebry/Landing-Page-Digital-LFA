@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const slides = [
     {
@@ -51,7 +51,9 @@ export default function Pengelola() {
                 {/* WRAPPER CARD DAN OUTLINE */}
                 <motion.div
                     initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                    whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    whileInView={
+                        reduceMotion ? undefined : { opacity: 1, y: 0 }
+                    }
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.55, ease: "easeOut" }}
                     className="relative mr-1 mb-1 sm:mr-1.5 sm:mb-1.5"
@@ -63,7 +65,7 @@ export default function Pengelola() {
                     />
 
                     {/* CARD UTAMA */}
-                    <div className="relative isolate grid min-h-[300px] overflow-hidden rounded-2xl border border-black bg-[#f5f2ec] shadow-[0_3px_8px_rgba(0,0,0,0.04)] sm:min-h-[330px] md:grid-cols-[1.05fr_0.95fr] lg:min-h-[360px]">
+                    <div className="relative isolate grid min-h-[300px] overflow-hidden rounded-2xl border border-black bg-slate-100 shadow-[0_3px_8px_rgba(0,0,0,0.04)] sm:min-h-[330px] md:grid-cols-[1.05fr_0.95fr] lg:min-h-[360px]">
                         {/* KIRI: INFORMASI PENGELOLA */}
                         <div className="relative z-10 flex flex-col items-start justify-center px-6 py-7 sm:px-8 sm:py-9 lg:px-12 lg:py-10">
                             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">
@@ -77,7 +79,7 @@ export default function Pengelola() {
                                 SKK Migas
                             </h2>
 
-                            <p className="mt-3 max-w-lg text-xs leading-6 text-slate-700 sm:text-sm sm:leading-7">
+                            <p className="mt-3 max-w-lg text-xs leading-6 text-black sm:text-sm sm:leading-7">
                                 Digital LFA dikelola oleh SKK Migas, lembaga
                                 yang dibentuk Pemerintah Republik Indonesia
                                 untuk melaksanakan pengelolaan kegiatan usaha
