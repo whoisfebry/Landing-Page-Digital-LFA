@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
@@ -39,15 +38,15 @@ export default function Untuksiapa() {
         reduceMotion
             ? {}
             : {
-                  initial: { opacity: 0, y: 16 },
-                  whileInView: { opacity: 1, y: 0 },
-                  viewport: { once: true, amount: 0.2 },
-                  transition: {
-                      duration: 0.55,
-                      delay,
-                      ease: "easeOut" as const,
-                  },
-              };
+                initial: { opacity: 0, y: 16 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, amount: 0.2 },
+                transition: {
+                    duration: 0.55,
+                    delay,
+                    ease: "easeOut" as const,
+                },
+            };
 
     return (
         <section
@@ -69,7 +68,7 @@ export default function Untuksiapa() {
 
                         <h2
                             id="untuk-siapa-title"
-                            className="mx-auto mt-4 max-w-3xl text-[clamp(0.875rem,1.2vw,1.1rem)] font-medium leading-[1.65] tracking-[-0.02em] text-slate-700"
+                            className="mx-auto mt-4 max-w-3xl text-[clamp(0.875rem,1.2vw,1.1rem)] font-medium leading-[1.65] tracking-[-0.02em] text-black"
                         >
                             Digital LFA digunakan bersama oleh SKK Migas
                             sebagai pengawas dan Kontraktor Kontrak Kerja Sama

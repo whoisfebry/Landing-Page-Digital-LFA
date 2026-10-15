@@ -72,7 +72,7 @@ const indicators: Indicator[] = [
         yAxisMax: 200,
         yAxisUnit: "Wilayah kerja",
         sourceNote:
-            "Data jumlah wilayah kerja menggambarkan perkembangan cakupan wilayah kerja sektor hulu migas berdasarkan periode yang ditampilkan.",
+            "Angka dimasukkan berdasarkan grafik referensi yang diberikan. Periode dan satuan perlu diverifikasi dengan publikasi resmi SKK Migas sebelum dipublikasikan.",
         isPlaceholder: false,
     },
     {
@@ -168,7 +168,7 @@ const indicators: Indicator[] = [
         yAxisMax: 2,
         yAxisUnit: "Miliar USD",
         sourceNote:
-            "Nilai bulanan merupakan data contoh berdasarkan grafik referensi sebelumnya. Verifikasi sumber dan periodenya sebelum publikasi.",
+            "Angka dimasukkan berdasarkan grafik referensi yang diberikan. Periode dan satuan perlu diverifikasi dengan publikasi resmi SKK Migas sebelum dipublikasikan.",
         isPlaceholder: false,
     },
 ];
@@ -199,15 +199,15 @@ export default function Statistik() {
         reduceMotion
             ? {}
             : {
-                  initial: { opacity: 0, y: 12 },
-                  whileInView: { opacity: 1, y: 0 },
-                  viewport: { once: true, amount: 0.15 },
-                  transition: {
-                      duration: 0.5,
-                      delay,
-                      ease: "easeOut" as const,
-                  },
-              };
+                initial: { opacity: 0, y: 12 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, amount: 0.15 },
+                transition: {
+                    duration: 0.5,
+                    delay,
+                    ease: "easeOut" as const,
+                },
+            };
 
     const selectedIndicator = useMemo(
         () => indicators.find((item) => item.id === selectedId),
@@ -463,13 +463,12 @@ export default function Statistik() {
                                                                                 className="group relative flex min-w-0 max-w-16 flex-1 cursor-pointer flex-col items-center justify-end sm:max-w-20"
                                                                             >
                                                                                 <span
-                                                                                    className={`mb-1.5 whitespace-nowrap text-[8px] font-semibold tabular-nums transition-colors duration-200 sm:text-[10px] ${
-                                                                                        isSelected
+                                                                                    className={`mb-1.5 whitespace-nowrap text-[8px] font-semibold tabular-nums transition-colors duration-200 sm:text-[10px] ${isSelected
                                                                                             ? "text-red-700"
                                                                                             : hasSelection
-                                                                                              ? "text-slate-300"
-                                                                                              : "text-slate-700"
-                                                                                    }`}
+                                                                                                ? "text-slate-300"
+                                                                                                : "text-slate-700"
+                                                                                        }`}
                                                                                 >
                                                                                     {formatNumber(point.value)}
                                                                                 </span>
@@ -496,13 +495,12 @@ export default function Statistik() {
                                                                                     }
                                                                                     aria-label={`${point.label}, nilai ${selectedIndicator.formatValue(point.value)}`}
                                                                                     aria-pressed={isSelected}
-                                                                                    className={`relative w-full cursor-pointer overflow-hidden rounded-t-sm outline-none transition-[background-color,opacity,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${
-                                                                                        isSelected
+                                                                                    className={`relative w-full cursor-pointer overflow-hidden rounded-t-sm outline-none transition-[background-color,opacity,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${isSelected
                                                                                             ? "z-10 bg-red-700 opacity-100 shadow-[0_3px_12px_rgba(185,28,28,0.25)]"
                                                                                             : hasSelection
-                                                                                              ? "bg-red-500 opacity-20 hover:!bg-red-400 hover:!opacity-60"
-                                                                                              : "bg-red-500 opacity-100 hover:!bg-red-600"
-                                                                                    }`}
+                                                                                                ? "bg-red-500 opacity-20 hover:!bg-red-400 hover:!opacity-60"
+                                                                                                : "bg-red-500 opacity-100 hover:!bg-red-600"
+                                                                                        }`}
                                                                                     style={{ minHeight: "3px" }}
                                                                                 >
                                                                                     <span className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-white/40" />
@@ -528,13 +526,12 @@ export default function Statistik() {
                                                                                 onClick={() =>
                                                                                     handlePointClick(point.label)
                                                                                 }
-                                                                                className={`min-w-0 max-w-16 flex-1 cursor-pointer truncate text-center text-[9px] font-medium transition-colors duration-200 sm:max-w-20 sm:text-[11px] ${
-                                                                                    isSelected
+                                                                                className={`min-w-0 max-w-16 flex-1 cursor-pointer truncate text-center text-[9px] font-medium transition-colors duration-200 sm:max-w-20 sm:text-[11px] ${isSelected
                                                                                         ? "font-bold text-red-700"
                                                                                         : hasSelection
-                                                                                          ? "text-slate-300 hover:text-red-500"
-                                                                                          : "text-slate-500 hover:text-red-600"
-                                                                                }`}
+                                                                                            ? "text-slate-300 hover:text-red-500"
+                                                                                            : "text-slate-500 hover:text-red-600"
+                                                                                    }`}
                                                                                 aria-pressed={isSelected}
                                                                             >
                                                                                 {point.label}

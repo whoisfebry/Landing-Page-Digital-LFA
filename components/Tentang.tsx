@@ -134,7 +134,7 @@ function IndonesiaDotMap() {
                 if (
                     parsedDocument.querySelector("parsererror") ||
                     parsedDocument.documentElement.tagName.toLowerCase() !==
-                        "svg"
+                    "svg"
                 ) {
                     throw new Error("Format SVG tidak valid.");
                 }
@@ -399,15 +399,15 @@ export default function Tentang() {
         reduceMotion
             ? {}
             : {
-                  initial: { opacity: 0, y: 18 },
-                  whileInView: { opacity: 1, y: 0 },
-                  viewport: { once: true, amount: 0.2 },
-                  transition: {
-                      duration: 0.6,
-                      delay,
-                      ease: "easeOut" as const,
-                  },
-              };
+                initial: { opacity: 0, y: 18 },
+                whileInView: { opacity: 1, y: 0 },
+                viewport: { once: true, amount: 0.2 },
+                transition: {
+                    duration: 0.6,
+                    delay,
+                    ease: "easeOut" as const,
+                },
+            };
 
     return (
         <main className="relative isolate overflow-hidden bg-white">
@@ -427,7 +427,7 @@ export default function Tentang() {
 
                         <h1
                             id="tentang-title"
-                            className="mt-5 max-w-[520px] text-xl font-bold leading-[1.25] tracking-[-0.03em] text-slate-900 sm:text-2xl lg:text-[clamp(1.6rem,2vw,2rem)]"
+                            className="mt-5 max-w-[520px] text-lg font-bold leading-[1.25] tracking-[-0.03em] text-slate-900 sm:text-xl lg:text-2xl"
                         >
                             Satu kerangka yang sama untuk seluruh wilayah kerja.
                         </h1>
@@ -478,7 +478,7 @@ export default function Tentang() {
 
                                 <h2
                                     id="alur-lfa-title"
-                                    className="mt-4 text-2xl font-bold leading-tight tracking-[-0.035em] text-slate-900 sm:text-3xl"
+                                    className="mt-4 text-xl font-bold leading-tight tracking-[-0.035em] text-slate-900 sm:text-2xl"
                                 >
                                     Empat tahap yang sama untuk setiap program.
                                 </h2>
@@ -507,10 +507,10 @@ export default function Tentang() {
                                         reduceMotion
                                             ? { duration: 0 }
                                             : {
-                                                  type: "spring",
-                                                  stiffness: 160,
-                                                  damping: 24,
-                                              }
+                                                type: "spring",
+                                                stiffness: 160,
+                                                damping: 24,
+                                            }
                                     }
                                 />
 
@@ -530,10 +530,10 @@ export default function Tentang() {
                                         reduceMotion
                                             ? { duration: 0 }
                                             : {
-                                                  type: "spring",
-                                                  stiffness: 160,
-                                                  damping: 24,
-                                              }
+                                                type: "spring",
+                                                stiffness: 160,
+                                                damping: 24,
+                                            }
                                     }
                                 />
 
@@ -567,11 +567,10 @@ export default function Tentang() {
                                                     <span className="relative block h-[11px] w-[11px] shrink-0">
                                                         <span
                                                             aria-hidden="true"
-                                                            className={`pointer-events-none absolute inset-0 rounded-full ${
-                                                                isActive && !reduceMotion
+                                                            className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
                                                                     ? "animate-[ripple_1.8s_ease-out_infinite]"
                                                                     : "opacity-0"
-                                                            }`}
+                                                                }`}
                                                             style={{
                                                                 backgroundColor:
                                                                     "rgba(220,38,38,0.35)",
@@ -580,11 +579,10 @@ export default function Tentang() {
 
                                                         <span
                                                             aria-hidden="true"
-                                                            className={`pointer-events-none absolute inset-0 rounded-full ${
-                                                                isActive && !reduceMotion
+                                                            className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
                                                                     ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
                                                                     : "opacity-0"
-                                                            }`}
+                                                                }`}
                                                             style={{
                                                                 backgroundColor:
                                                                     "rgba(220,38,38,0.25)",
@@ -600,8 +598,8 @@ export default function Tentang() {
                                                                 boxShadow: isActive
                                                                     ? "0 0 0 2px rgba(220,38,38,0.2), 0 0 6px 1px rgba(220,38,38,0.3)"
                                                                     : isReached
-                                                                      ? "0 0 0 2px rgba(220,38,38,0.10)"
-                                                                      : "0 0 0 2px rgba(148,163,184,0.12)",
+                                                                        ? "0 0 0 2px rgba(220,38,38,0.10)"
+                                                                        : "0 0 0 2px rgba(148,163,184,0.12)",
                                                             }}
                                                             transition={{
                                                                 duration: reduceMotion
@@ -619,11 +617,10 @@ export default function Tentang() {
                                                 </div>
 
                                                 <div
-                                                    className={`group relative ml-6 flex min-h-[155px] w-[calc(100%-1.5rem)] flex-col rounded-xl border bg-white p-4 transition-colors duration-300 sm:min-h-[170px] sm:p-5 md:ml-0 md:min-h-[205px] md:w-full md:p-4 lg:min-h-[190px] lg:p-5 ${
-                                                        isActive
+                                                    className={`group relative ml-6 flex min-h-[155px] w-[calc(100%-1.5rem)] flex-col rounded-xl border bg-white p-4 transition-colors duration-300 sm:min-h-[170px] sm:p-5 md:ml-0 md:min-h-[205px] md:w-full md:p-4 lg:min-h-[190px] lg:p-5 ${isActive
                                                             ? "border-red-200"
                                                             : "border-slate-200 hover:border-red-200"
-                                                    }`}
+                                                        }`}
                                                 >
                                                     <button
                                                         type="button"
@@ -636,22 +633,20 @@ export default function Tentang() {
                                                     >
                                                         <div className="flex w-full items-start justify-between gap-2">
                                                             <span
-                                                                className={`text-2xl font-bold leading-none tracking-[-0.045em] transition-colors duration-300 sm:text-3xl md:text-4xl ${
-                                                                    isReached
+                                                                className={`text-2xl font-bold leading-none tracking-[-0.045em] transition-colors duration-300 sm:text-3xl md:text-4xl ${isReached
                                                                         ? "text-red-600"
                                                                         : "text-slate-300 group-hover:text-red-600"
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 {stage.number}
                                                             </span>
 
                                                             <span
                                                                 aria-hidden="true"
-                                                                className={`mt-0.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] transition-colors duration-300 sm:h-6 sm:w-6 sm:text-xs ${
-                                                                    showGreenCheck
+                                                                className={`mt-0.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] transition-colors duration-300 sm:h-6 sm:w-6 sm:text-xs ${showGreenCheck
                                                                         ? "bg-emerald-600 text-white"
                                                                         : "bg-slate-100 text-slate-400"
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 {showGreenCheck
                                                                     ? "✓"
@@ -660,11 +655,10 @@ export default function Tentang() {
                                                         </div>
 
                                                         <h3
-                                                            className={`mt-3 text-[13px] font-bold tracking-tight sm:mt-4 sm:text-sm md:text-base ${
-                                                                isReached
+                                                            className={`mt-3 text-[13px] font-bold tracking-tight sm:mt-4 sm:text-sm md:text-base ${isReached
                                                                     ? "text-slate-900"
                                                                     : "text-slate-700"
-                                                            }`}
+                                                                }`}
                                                         >
                                                             {stage.title}
                                                         </h3>
@@ -676,23 +670,22 @@ export default function Tentang() {
 
                                                     <div className="mt-auto flex items-center justify-between gap-2 pt-3 sm:pt-4">
                                                         <span
-                                                            className={`text-[9px] font-semibold uppercase tracking-[0.1em] sm:text-[10px] sm:tracking-[0.12em] ${
-                                                                isCompleted
+                                                            className={`text-[9px] font-semibold uppercase tracking-[0.1em] sm:text-[10px] sm:tracking-[0.12em] ${isCompleted
                                                                     ? "text-emerald-600"
                                                                     : isActive
-                                                                      ? "text-red-600"
-                                                                      : isReached
-                                                                        ? "text-emerald-600"
-                                                                        : "text-slate-400"
-                                                            }`}
+                                                                        ? "text-red-600"
+                                                                        : isReached
+                                                                            ? "text-emerald-600"
+                                                                            : "text-slate-400"
+                                                                }`}
                                                         >
                                                             {isCompleted
                                                                 ? "Tahap selesai"
                                                                 : isActive
-                                                                  ? "Tahap aktif"
-                                                                  : isReached
-                                                                    ? "Tahap tercapai"
-                                                                    : "Belum tercapai"}
+                                                                    ? "Tahap aktif"
+                                                                    : isReached
+                                                                        ? "Tahap tercapai"
+                                                                        : "Belum tercapai"}
                                                         </span>
 
                                                         {isStageFour &&

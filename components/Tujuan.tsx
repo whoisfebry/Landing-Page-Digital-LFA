@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
@@ -56,7 +55,7 @@ export default function Tujuan() {
 
                     <h2
                         id="tujuan-title"
-                        className="mt-5 max-w-xl text-[clamp(1.5rem,3vw,2.2rem)] font-bold leading-[1.25] tracking-[-0.04em] text-slate-900"
+                        className="mt-5 max-w-xl text-2xl font-bold leading-[1.25] tracking-[-0.04em] text-slate-900 sm:text-3xl"
                     >
                         <FoldText
                             text="Agar program dapat diperiksa,"
@@ -111,8 +110,8 @@ export default function Tujuan() {
                             key={item.number}
                             {...reveal(0.12 + index * 0.12)}
                             className={`group relative py-6 sm:py-7 ${index === 0
-                                    ? "border-b border-slate-200"
-                                    : ""
+                                ? "border-b border-slate-200"
+                                : ""
                                 }`}
                         >
                             <div className="flex items-start gap-4 sm:gap-6">
