@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
@@ -15,7 +14,12 @@ import {
     TrendingUp,
 } from "lucide-react";
 
-type IndicatorId = "wilayah" | "minyak" | "gas" | "investasi";
+type IndicatorId =
+    | "wilayah"
+    | "minyak"
+    | "gas"
+    | "minyak-gas"
+    | "investasi";
 
 type ChartPoint = {
     label: string;
@@ -32,6 +36,9 @@ type Indicator = {
     data: ChartPoint[];
     sourceNote: string;
     isPlaceholder: boolean;
+    yAxisTicks: number[];
+    yAxisMax: number;
+    yAxisUnit: string;
 };
 
 const numberFormatter = new Intl.NumberFormat("id-ID", {
@@ -39,6 +46,8 @@ const numberFormatter = new Intl.NumberFormat("id-ID", {
 });
 
 const formatNumber = (value: number) => numberFormatter.format(value);
+
+const formatProduction = (value: number) => formatNumber(value);
 
 const indicators: Indicator[] = [
     {
@@ -49,34 +58,94 @@ const indicators: Indicator[] = [
         icon: MapPinned,
         formatValue: (value) =>
             `${new Intl.NumberFormat("id-ID").format(value)} wilayah`,
-        data: [],
+        data: [
+            { label: "Jan", value: 159 },
+            { label: "Feb", value: 159 },
+            { label: "Mar", value: 158 },
+            { label: "Apr", value: 157 },
+            { label: "Mei", value: 158 },
+            { label: "Jun", value: 167 },
+            { label: "Jul", value: 165 },
+            { label: "Agu", value: 165 },
+        ],
+        yAxisTicks: [50, 100, 150, 200],
+        yAxisMax: 200,
+        yAxisUnit: "Wilayah kerja",
         sourceNote:
-            "Jumlah wilayah kerja perlu disesuaikan dengan data resmi.",
-        isPlaceholder: true,
+            "Data jumlah wilayah kerja menggambarkan perkembangan cakupan wilayah kerja sektor hulu migas berdasarkan periode yang ditampilkan.",
+        isPlaceholder: false,
     },
     {
         id: "minyak",
-        label: "Produksi Minyak",
-        description: "Produksi minyak termasuk NGL",
-        unit: "sesuai sumber",
+        label: "Produksi Minyak (Termasuk NGL)",
+        description: "Produksi minyak termasuk Natural Gas Liquids (NGL)",
+        unit: "MBOPD",
         icon: Droplets,
-        formatValue: (value) => formatNumber(value),
-        data: [],
+        formatValue: (value) => formatProduction(value),
+        data: [
+            { label: "Jan", value: 530.2 },
+            { label: "Feb", value: 591.5 },
+            { label: "Mar", value: 599.9 },
+            { label: "Apr", value: 586.5 },
+            { label: "Mei", value: 577.9 },
+            { label: "Jun", value: 580.7 },
+            { label: "Jul", value: 580 },
+            { label: "Agu", value: 580.8 },
+        ],
+        yAxisTicks: [100, 200, 300, 400, 500, 600],
+        yAxisMax: 600,
+        yAxisUnit: "MBOPD",
         sourceNote:
-            "Satuan produksi perlu disesuaikan dengan publikasi resmi SKK Migas.",
-        isPlaceholder: true,
+            "Angka dimasukkan berdasarkan grafik referensi yang diberikan. Periode dan satuan perlu diverifikasi dengan publikasi resmi SKK Migas sebelum dipublikasikan.",
+        isPlaceholder: false,
     },
     {
         id: "gas",
-        label: "Produksi Gas Bumi",
-        description: "Produksi gas bumi tidak termasuk NGL",
-        unit: "sesuai sumber",
+        label: "Produksi Gas Bumi (Tidak Termasuk NGL)",
+        description: "Produksi gas bumi tidak termasuk Natural Gas Liquids (NGL)",
+        unit: "MMSCFD",
         icon: Factory,
-        formatValue: (value) => formatNumber(value),
-        data: [],
+        formatValue: (value) => formatProduction(value),
+        data: [
+            { label: "Jan", value: 6458 },
+            { label: "Feb", value: 6681 },
+            { label: "Mar", value: 6675 },
+            { label: "Apr", value: 6802 },
+            { label: "Mei", value: 6179 },
+            { label: "Jun", value: 6273 },
+            { label: "Jul", value: 6804 },
+            { label: "Agu", value: 6680 },
+        ],
+        yAxisTicks: [2000, 4000, 6000, 8000],
+        yAxisMax: 8000,
+        yAxisUnit: "MMSCFD",
         sourceNote:
-            "Satuan produksi perlu disesuaikan dengan publikasi resmi SKK Migas.",
-        isPlaceholder: true,
+            "Angka dimasukkan berdasarkan grafik referensi yang diberikan. Periode dan satuan perlu diverifikasi dengan publikasi resmi SKK Migas sebelum dipublikasikan.",
+        isPlaceholder: false,
+    },
+    {
+        id: "minyak-gas",
+        label: "Produksi Minyak & Gas Bumi",
+        description: "Ringkasan produksi minyak dan gas bumi",
+        unit: "MBOEPD",
+        icon: Factory,
+        formatValue: (value) => formatProduction(value),
+        data: [
+            { label: "Jan", value: 1667 },
+            { label: "Feb", value: 1769 },
+            { label: "Mar", value: 1768 },
+            { label: "Apr", value: 1778 },
+            { label: "Mei", value: 1657 },
+            { label: "Jun", value: 1677 },
+            { label: "Jul", value: 1770.1 },
+            { label: "Agu", value: 1749 },
+        ],
+        yAxisTicks: [500, 1000, 1500, 2000],
+        yAxisMax: 2000,
+        yAxisUnit: "MBOEPD",
+        sourceNote:
+            "Angka dimasukkan berdasarkan grafik referensi yang diberikan. Periode dan satuan perlu diverifikasi dengan publikasi resmi SKK Migas sebelum dipublikasikan.",
+        isPlaceholder: false,
     },
     {
         id: "investasi",
@@ -95,13 +164,29 @@ const indicators: Indicator[] = [
             { label: "Jul", value: 1.57 },
             { label: "Agu", value: 0.4 },
         ],
+        yAxisTicks: [0.5, 1, 1.5, 2],
+        yAxisMax: 2,
+        yAxisUnit: "Miliar USD",
         sourceNote:
-            "Nilai bulanan merupakan data contoh berdasarkan grafik pada screenshot. Verifikasi sumber dan periodenya sebelum publikasi.",
+            "Nilai bulanan merupakan data contoh berdasarkan grafik referensi sebelumnya. Verifikasi sumber dan periodenya sebelum publikasi.",
         isPlaceholder: false,
     },
 ];
 
 const years = ["2026", "2025", "2024"];
+
+function formatAxisTick(value: number, indicatorId: IndicatorId) {
+    if (indicatorId === "investasi") {
+        return `${formatNumber(value)} Miliar USD`;
+    }
+
+    if (indicatorId === "wilayah") {
+        return `${formatNumber(value)} Wilayah kerja`;
+    }
+
+    const indicator = indicators.find((item) => item.id === indicatorId);
+    return `${formatNumber(value)} ${indicator?.yAxisUnit ?? ""}`;
+}
 
 export default function Statistik() {
     const [selectedId, setSelectedId] = useState<IndicatorId | "none">("none");
@@ -129,13 +214,10 @@ export default function Statistik() {
         [selectedId],
     );
 
-    const chartData = selectedIndicator?.data ?? [];
+    const chartData =
+        selectedYear === "2026" ? selectedIndicator?.data ?? [] : [];
 
-    const maxValue = Math.max(
-        0,
-        ...chartData.map((point) => point.value),
-    );
-
+    const maxValue = Math.max(0, ...chartData.map((point) => point.value));
     const hasData = chartData.length > 0 && maxValue > 0;
 
     const handlePointClick = (label: string) => {
@@ -149,7 +231,6 @@ export default function Statistik() {
                 aria-labelledby="statistik-title"
                 className="relative mb-25 scroll-mt-15 px-0 py-0 sm:scroll-mt-28 lg:scroll-mt-32"
             >
-                {/* BACKGROUND ABU-ABU ROUNDED */}
                 <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-8 sm:rounded-[36px] sm:px-8 sm:py-10 lg:rounded-[44px] lg:px-12 lg:py-12">
                     <div className="mx-auto w-full max-w-7xl">
                         {/* HEADER */}
@@ -214,10 +295,7 @@ export default function Statistik() {
                                                     }}
                                                     className="h-9 w-full cursor-pointer appearance-none rounded-lg border border-slate-200 bg-slate-50 px-3 pr-9 text-xs text-slate-800 outline-none transition hover:border-slate-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-500/10"
                                                 >
-                                                    <option value="none">
-                                                        Pilih Indikator
-                                                    </option>
-
+                                                    <option value="none">Pilih Indikator</option>
                                                     {indicators.map((item) => (
                                                         <option key={item.id} value={item.id}>
                                                             {item.label}
@@ -327,123 +405,143 @@ export default function Statistik() {
                                                 </span>
                                             </div>
 
-                                            {hasData ? (
+                                            {hasData && selectedIndicator ? (
                                                 <>
                                                     {/* VERTICAL BAR CHART */}
                                                     <div className="rounded-lg border border-slate-100 bg-slate-50/60 p-3 sm:p-4">
-                                                        <div className="relative h-[210px] sm:h-[250px] lg:h-[270px]">
-                                                            {/* GRID LINES */}
-                                                            <div className="pointer-events-none absolute inset-0 flex flex-col justify-between pb-7 pt-2">
-                                                                {[4, 3, 2, 1, 0].map((tick) => (
+                                                        <div className="relative h-[250px] sm:h-[290px] lg:h-[310px]">
+                                                            {/*
+                                                                Area label Y dibuat lebih ramping
+                                                                agar ruang kiri dan kanan lebih seimbang.
+                                                            */}
+                                                            <div className="absolute bottom-7 left-0 top-4 w-[104px] sm:w-[124px]">
+                                                                {selectedIndicator.yAxisTicks.map((tick) => (
                                                                     <div
                                                                         key={tick}
-                                                                        className="border-t border-dashed border-slate-200"
-                                                                    />
+                                                                        className="absolute right-2 -translate-y-1/2 whitespace-nowrap text-right text-[8px] font-medium tabular-nums text-slate-500 sm:text-[10px]"
+                                                                        style={{
+                                                                            bottom: `calc(${(tick / selectedIndicator.yAxisMax) * 100}% - 6px)`,
+                                                                        }}
+                                                                    >
+                                                                        {formatAxisTick(tick, selectedIndicator.id)}
+                                                                    </div>
                                                                 ))}
                                                             </div>
 
-                                                            {/* BARS */}
-                                                            <div className="absolute inset-0 flex items-stretch justify-around gap-3 px-2 pb-7 pt-2 sm:gap-4 sm:px-3">
-                                                                {chartData.map((point, index) => {
-                                                                    const height =
-                                                                        (point.value / maxValue) * 100;
-
-                                                                    const isSelected =
-                                                                        selectedPoint === point.label;
-
-                                                                    const hasSelection =
-                                                                        selectedPoint !== null;
-
-                                                                    return (
+                                                            {/*
+                                                                Area plot dimulai lebih dekat ke label Y,
+                                                                sehingga tidak ada ruang kosong berlebihan.
+                                                            */}
+                                                            <div className="absolute inset-y-0 left-[108px] right-1 sm:left-[130px] sm:right-2">
+                                                                {/* GRID LINES */}
+                                                                <div className="pointer-events-none absolute inset-x-0 bottom-7 top-4 flex flex-col justify-between">
+                                                                    {[4, 3, 2, 1, 0].map((tick) => (
                                                                         <div
-                                                                            key={point.label}
-                                                                            className="group relative flex min-w-0 max-w-16 flex-1 cursor-pointer flex-col items-center justify-end sm:max-w-20"
-                                                                        >
-                                                                            {/* VALUE LABEL */}
-                                                                            <span
-                                                                                className={`mb-1.5 whitespace-nowrap text-[9px] font-semibold tabular-nums transition-colors duration-200 sm:text-[11px] ${
-                                                                                    isSelected
-                                                                                        ? "text-red-700"
-                                                                                        : hasSelection
-                                                                                          ? "text-slate-300"
-                                                                                          : "text-slate-700"
-                                                                                }`}
-                                                                            >
-                                                                                {formatNumber(point.value)}
-                                                                            </span>
+                                                                            key={tick}
+                                                                            className="border-t border-dashed border-slate-200"
+                                                                        />
+                                                                    ))}
+                                                                </div>
 
-                                                                            {/* CLICKABLE BAR */}
-                                                                            <motion.button
+                                                                {/* BARS */}
+                                                                <div className="absolute inset-x-0 bottom-7 top-4 flex items-stretch justify-around gap-2 px-1 sm:gap-4 sm:px-2">
+                                                                    {chartData.map((point, index) => {
+                                                                        const height = Math.min(
+                                                                            (point.value / selectedIndicator.yAxisMax) * 100,
+                                                                            100,
+                                                                        );
+
+                                                                        const isSelected =
+                                                                            selectedPoint === point.label;
+
+                                                                        const hasSelection =
+                                                                            selectedPoint !== null;
+
+                                                                        return (
+                                                                            <div
+                                                                                key={point.label}
+                                                                                className="group relative flex min-w-0 max-w-16 flex-1 cursor-pointer flex-col items-center justify-end sm:max-w-20"
+                                                                            >
+                                                                                <span
+                                                                                    className={`mb-1.5 whitespace-nowrap text-[8px] font-semibold tabular-nums transition-colors duration-200 sm:text-[10px] ${
+                                                                                        isSelected
+                                                                                            ? "text-red-700"
+                                                                                            : hasSelection
+                                                                                              ? "text-slate-300"
+                                                                                              : "text-slate-700"
+                                                                                    }`}
+                                                                                >
+                                                                                    {formatNumber(point.value)}
+                                                                                </span>
+
+                                                                                <motion.button
+                                                                                    type="button"
+                                                                                    initial={
+                                                                                        reduceMotion ? false : { height: 0 }
+                                                                                    }
+                                                                                    animate={{
+                                                                                        height: `${height}%`,
+                                                                                    }}
+                                                                                    transition={{
+                                                                                        height: {
+                                                                                            duration: reduceMotion ? 0 : 0.5,
+                                                                                            delay: reduceMotion ? 0 : index * 0.04,
+                                                                                            ease: "easeOut",
+                                                                                        },
+                                                                                        backgroundColor: { duration: 0.2 },
+                                                                                        opacity: { duration: 0.2 },
+                                                                                    }}
+                                                                                    onClick={() =>
+                                                                                        handlePointClick(point.label)
+                                                                                    }
+                                                                                    aria-label={`${point.label}, nilai ${selectedIndicator.formatValue(point.value)}`}
+                                                                                    aria-pressed={isSelected}
+                                                                                    className={`relative w-full cursor-pointer overflow-hidden rounded-t-sm outline-none transition-[background-color,opacity,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${
+                                                                                        isSelected
+                                                                                            ? "z-10 bg-red-700 opacity-100 shadow-[0_3px_12px_rgba(185,28,28,0.25)]"
+                                                                                            : hasSelection
+                                                                                              ? "bg-red-500 opacity-20 hover:!bg-red-400 hover:!opacity-60"
+                                                                                              : "bg-red-500 opacity-100 hover:!bg-red-600"
+                                                                                    }`}
+                                                                                    style={{ minHeight: "3px" }}
+                                                                                >
+                                                                                    <span className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-white/40" />
+                                                                                </motion.button>
+                                                                            </div>
+                                                                        );
+                                                                    })}
+                                                                </div>
+
+                                                                {/* X AXIS LABELS */}
+                                                                <div className="absolute inset-x-0 bottom-0 flex justify-around gap-2 px-1 sm:gap-4 sm:px-2">
+                                                                    {chartData.map((point) => {
+                                                                        const isSelected =
+                                                                            selectedPoint === point.label;
+
+                                                                        const hasSelection =
+                                                                            selectedPoint !== null;
+
+                                                                        return (
+                                                                            <button
+                                                                                key={point.label}
                                                                                 type="button"
-                                                                                initial={
-                                                                                    reduceMotion
-                                                                                        ? false
-                                                                                        : { height: 0 }
-                                                                                }
-                                                                                animate={{
-                                                                                    height: `${height}%`,
-                                                                                }}
-                                                                                transition={{
-                                                                                    height: {
-                                                                                        duration: reduceMotion ? 0 : 0.5,
-                                                                                        delay: reduceMotion ? 0 : index * 0.04,
-                                                                                        ease: "easeOut",
-                                                                                    },
-                                                                                    backgroundColor: { duration: 0.2 },
-                                                                                    opacity: { duration: 0.2 },
-                                                                                }}
                                                                                 onClick={() =>
                                                                                     handlePointClick(point.label)
                                                                                 }
-                                                                                aria-label={`${point.label}, nilai ${selectedIndicator?.formatValue(point.value)}`}
-                                                                                aria-pressed={isSelected}
-                                                                                className={`relative w-full cursor-pointer overflow-hidden rounded-t-sm outline-none transition-[background-color,opacity,box-shadow] duration-200 focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 ${
+                                                                                className={`min-w-0 max-w-16 flex-1 cursor-pointer truncate text-center text-[9px] font-medium transition-colors duration-200 sm:max-w-20 sm:text-[11px] ${
                                                                                     isSelected
-                                                                                        ? "z-10 bg-red-700 opacity-100 shadow-[0_3px_12px_rgba(185,28,28,0.25)]"
+                                                                                        ? "font-bold text-red-700"
                                                                                         : hasSelection
-                                                                                          ? "bg-red-500 opacity-20 hover:!bg-red-400 hover:!opacity-60"
-                                                                                          : "bg-red-500 opacity-100 hover:!bg-red-600"
+                                                                                          ? "text-slate-300 hover:text-red-500"
+                                                                                          : "text-slate-500 hover:text-red-600"
                                                                                 }`}
-                                                                                style={{
-                                                                                    minHeight: "3px",
-                                                                                }}
+                                                                                aria-pressed={isSelected}
                                                                             >
-                                                                                <span className="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-white/40" />
-                                                                            </motion.button>
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-
-                                                            {/* X AXIS LABELS */}
-                                                            <div className="absolute inset-x-0 bottom-0 flex justify-around gap-3 px-2 sm:gap-4 sm:px-3">
-                                                                {chartData.map((point) => {
-                                                                    const isSelected =
-                                                                        selectedPoint === point.label;
-
-                                                                    const hasSelection =
-                                                                        selectedPoint !== null;
-
-                                                                    return (
-                                                                        <button
-                                                                            key={point.label}
-                                                                            type="button"
-                                                                            onClick={() =>
-                                                                                handlePointClick(point.label)
-                                                                            }
-                                                                            className={`min-w-0 max-w-16 flex-1 cursor-pointer truncate text-center text-[9px] font-medium transition-colors duration-200 sm:max-w-20 sm:text-[11px] ${
-                                                                                isSelected
-                                                                                    ? "font-bold text-red-700"
-                                                                                    : hasSelection
-                                                                                      ? "text-slate-300 hover:text-red-500"
-                                                                                      : "text-slate-500 hover:text-red-600"
-                                                                            }`}
-                                                                            aria-pressed={isSelected}
-                                                                        >
-                                                                            {point.label}
-                                                                        </button>
-                                                                    );
-                                                                })}
+                                                                                {point.label}
+                                                                            </button>
+                                                                        );
+                                                                    })}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -457,7 +555,7 @@ export default function Statistik() {
                                                                 animate={{ opacity: 1, y: 0 }}
                                                                 exit={{ opacity: 0, y: -5 }}
                                                                 transition={{ duration: 0.2 }}
-                                                                className="mt-3 flex items-center justify-between gap-3 rounded-lg border border-red-100 bg-red-50/70 p-3"
+                                                                className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-red-100 bg-red-50/70 p-3"
                                                             >
                                                                 <div>
                                                                     <p className="text-[10px] font-medium text-slate-500 sm:text-[11px]">
@@ -473,7 +571,7 @@ export default function Statistik() {
                                                                         Nilai
                                                                     </p>
                                                                     <p className="mt-0.5 text-sm font-bold text-red-700 sm:text-base">
-                                                                        {selectedIndicator?.formatValue(
+                                                                        {selectedIndicator.formatValue(
                                                                             chartData.find(
                                                                                 (point) => point.label === selectedPoint,
                                                                             )?.value ?? 0,
@@ -485,14 +583,14 @@ export default function Statistik() {
                                                     </AnimatePresence>
 
                                                     {/* SUMMARY */}
-                                                    <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                                                    <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                                                         <div className="rounded-lg border border-slate-100 bg-white p-3">
                                                             <p className="text-[10px] text-slate-500 sm:text-[11px]">
                                                                 Nilai tertinggi pada grafik
                                                             </p>
 
                                                             <p className="mt-1 text-sm font-bold text-slate-900 sm:text-base">
-                                                                {selectedIndicator?.formatValue(maxValue)}
+                                                                {selectedIndicator.formatValue(maxValue)}
                                                             </p>
                                                         </div>
 
