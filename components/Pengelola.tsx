@@ -58,14 +58,14 @@ export default function Pengelola() {
                     transition={{ duration: 0.55, ease: "easeOut" }}
                     className="relative mr-1 mb-1 sm:mr-1.5 sm:mb-1.5"
                 >
-                    {/* OUTLINE HITAM TIPIS DI BELAKANG CARD */}
+                    {/* OUTLINE ABU-ABU DI BELAKANG CARD */}
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 translate-x-1 translate-y-1 rounded-2xl border border-black bg-black sm:translate-x-1.5 sm:translate-y-1.5"
+                        className="pointer-events-none absolute inset-0 translate-x-1 translate-y-1 rounded-2xl border border-slate-300 bg-slate-300 sm:translate-x-1.5 sm:translate-y-1.5"
                     />
 
                     {/* CARD UTAMA */}
-                    <div className="relative isolate grid min-h-[300px] overflow-hidden rounded-2xl border border-black bg-slate-100 shadow-[0_3px_8px_rgba(0,0,0,0.04)] sm:min-h-[330px] md:grid-cols-[1.05fr_0.95fr] lg:min-h-[360px]">
+                    <div className="relative isolate grid min-h-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-[0_3px_8px_rgba(0,0,0,0.04)] sm:min-h-[330px] md:grid-cols-[1.05fr_0.95fr] lg:min-h-[360px]">
                         {/* KIRI: INFORMASI PENGELOLA */}
                         <div className="relative z-10 flex flex-col items-start justify-center px-6 py-7 sm:px-8 sm:py-9 lg:px-12 lg:py-10">
                             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-red-600 sm:text-[11px]">

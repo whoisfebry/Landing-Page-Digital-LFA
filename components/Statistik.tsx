@@ -189,10 +189,14 @@ function formatAxisTick(value: number, indicatorId: IndicatorId) {
 }
 
 export default function Statistik() {
-    const [selectedId, setSelectedId] = useState<IndicatorId | "none">("none");
+    const [openDropdown, setOpenDropdown] =
+        useState<"indikator" | "tahun" | null>(null);
+
+    const [selectedId, setSelectedId] =
+        useState<IndicatorId | "none">("none");
+
     const [selectedYear, setSelectedYear] = useState("2026");
     const [selectedPoint, setSelectedPoint] = useState<string | null>(null);
-
     const reduceMotion = useReducedMotion();
 
     const reveal = (delay = 0) =>
@@ -275,73 +279,194 @@ export default function Statistik() {
 
                                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:w-[380px]">
                                         {/* DROPDOWN INDIKATOR */}
-                                        <div className="min-w-0">
-                                            <label
-                                                htmlFor="statistik-indikator"
-                                                className="mb-1.5 block text-[10px] font-semibold text-slate-700 sm:text-[11px]"
-                                            >
-                                                Indikator
-                                            </label>
+<div className="min-w-0">
+    <label
+        htmlFor="statistik-indikator"
+        className="mb-1.5 block text-[10px] font-semibold text-slate-700 sm:text-[11px]"
+    >
+        Indikator
+    </label>
 
-                                            <div className="relative">
-                                                <select
-                                                    id="statistik-indikator"
-                                                    value={selectedId}
-                                                    onChange={(event) => {
-                                                        setSelectedId(
-                                                            event.target.value as IndicatorId | "none",
-                                                        );
-                                                        setSelectedPoint(null);
-                                                    }}
-                                                    className="h-9 w-full cursor-pointer appearance-none rounded-lg border border-slate-200 bg-slate-50 px-3 pr-9 text-xs text-slate-800 outline-none transition hover:border-slate-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-500/10"
-                                                >
-                                                    <option value="none">Pilih Indikator</option>
-                                                    {indicators.map((item) => (
-                                                        <option key={item.id} value={item.id}>
-                                                            {item.label}
-                                                        </option>
-                                                    ))}
-                                                </select>
+    <div className="relative">
+        <button
+            id="statistik-indikator"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={openDropdown === "indikator"}
+            onClick={() =>
+                setOpenDropdown((current) =>
+                    current === "indikator" ? null : "indikator",
+                )
+            }
+            className={`flex h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-lg border bg-white px-3 text-xs outline-none transition ${
+                openDropdown === "indikator"
+                    ? "border-red-500 ring-2 ring-red-500/10"
+                    : "border-slate-200 hover:border-red-300"
+            }`}
+        >
+            <span
+                className={
+                    selectedId === "none"
+                        ? "truncate text-slate-400"
+                        : "truncate text-slate-800"
+                }
+            >
+                {selectedId === "none"
+                    ? "Pilih Indikator"
+                    : indicators.find((item) => item.id === selectedId)?.label}
+            </span>
 
-                                                <ChevronDown
-                                                    size={14}
-                                                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
-                                                />
-                                            </div>
-                                        </div>
+            <ChevronDown
+                size={14}
+                className={`shrink-0 text-red-500 transition-transform ${
+                    openDropdown === "indikator" ? "rotate-180" : ""
+                }`}
+            />
+        </button>
 
-                                        {/* DROPDOWN TAHUN */}
-                                        <div className="min-w-0">
-                                            <label
-                                                htmlFor="statistik-tahun"
-                                                className="mb-1.5 block text-[10px] font-semibold text-slate-700 sm:text-[11px]"
-                                            >
-                                                Tahun
-                                            </label>
+        {openDropdown === "indikator" && (
+            <>
+                <button
+                    type="button"
+                    aria-label="Tutup pilihan indikator"
+                    className="fixed inset-0 z-20 cursor-default"
+                    onClick={() => setOpenDropdown(null)}
+                />
 
-                                            <div className="relative">
-                                                <select
-                                                    id="statistik-tahun"
-                                                    value={selectedYear}
-                                                    onChange={(event) => {
-                                                        setSelectedYear(event.target.value);
-                                                        setSelectedPoint(null);
-                                                    }}
-                                                    className="h-9 w-full cursor-pointer appearance-none rounded-lg border border-slate-200 bg-slate-50 px-3 pr-9 text-xs text-slate-800 outline-none transition hover:border-slate-300 focus:border-red-500 focus:bg-white focus:ring-2 focus:ring-red-500/10"
-                                                >
-                                                    {years.map((year) => (
-                                                        <option key={year} value={year}>
-                                                            {year}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                <div
+                    role="listbox"
+                    aria-labelledby="statistik-indikator"
+                    className="absolute left-0 top-full z-30 mt-1.5 max-h-56 w-full min-w-0 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg shadow-slate-900/10"
+                >
+                    <button
+                        type="button"
+                        role="option"
+                        aria-selected={selectedId === "none"}
+                        onClick={() => {
+                            setSelectedId("none");
+                            setSelectedPoint(null);
+                            setOpenDropdown(null);
+                        }}
+                        className={`w-full rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                            selectedId === "none"
+                                ? "bg-red-50 font-semibold text-red-600"
+                                : "text-slate-700 hover:bg-red-50 hover:text-red-600"
+                        }`}
+                    >
+                        Pilih Indikator
+                    </button>
 
-                                                <ChevronDown
-                                                    size={14}
-                                                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
-                                                />
-                                            </div>
-                                        </div>
+                    {indicators.map((item) => {
+                        const isSelected = selectedId === item.id;
+
+                        return (
+                            <button
+                                key={item.id}
+                                type="button"
+                                role="option"
+                                aria-selected={isSelected}
+                                onClick={() => {
+                                    setSelectedId(item.id);
+                                    setSelectedPoint(null);
+                                    setOpenDropdown(null);
+                                }}
+                                className={`w-full rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                                    isSelected
+                                        ? "bg-red-50 font-semibold text-red-600"
+                                        : "text-slate-700 hover:bg-red-50 hover:text-red-600"
+                                }`}
+                            >
+                                {item.label}
+                            </button>
+                        );
+                    })}
+                </div>
+            </>
+        )}
+    </div>
+</div>
+
+{/* DROPDOWN TAHUN */}
+<div className="min-w-0">
+    <label
+        htmlFor="statistik-tahun"
+        className="mb-1.5 block text-[10px] font-semibold text-slate-700 sm:text-[11px]"
+    >
+        Tahun
+    </label>
+
+    <div className="relative">
+        <button
+            id="statistik-tahun"
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={openDropdown === "tahun"}
+            onClick={() =>
+                setOpenDropdown((current) =>
+                    current === "tahun" ? null : "tahun",
+                )
+            }
+            className={`flex h-9 w-full cursor-pointer items-center justify-between gap-2 rounded-lg border bg-white px-3 text-xs outline-none transition ${
+                openDropdown === "tahun"
+                    ? "border-red-500 ring-2 ring-red-500/10"
+                    : "border-slate-200 hover:border-red-300"
+            }`}
+        >
+            <span className="truncate text-slate-800">
+                {selectedYear}
+            </span>
+
+            <ChevronDown
+                size={14}
+                className={`shrink-0 text-red-500 transition-transform ${
+                    openDropdown === "tahun" ? "rotate-180" : ""
+                }`}
+            />
+        </button>
+
+        {openDropdown === "tahun" && (
+            <>
+                <button
+                    type="button"
+                    aria-label="Tutup pilihan tahun"
+                    className="fixed inset-0 z-20 cursor-default"
+                    onClick={() => setOpenDropdown(null)}
+                />
+
+                <div
+                    role="listbox"
+                    aria-labelledby="statistik-tahun"
+                    className="absolute left-0 top-full z-30 mt-1.5 max-h-56 w-full min-w-0 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1.5 shadow-lg shadow-slate-900/10"
+                >
+                    {years.map((year) => {
+                        const isSelected = selectedYear === year;
+
+                        return (
+                            <button
+                                key={year}
+                                type="button"
+                                role="option"
+                                aria-selected={isSelected}
+                                onClick={() => {
+                                    setSelectedYear(year);
+                                    setSelectedPoint(null);
+                                    setOpenDropdown(null);
+                                }}
+                                className={`w-full rounded-lg px-2.5 py-2 text-left text-xs transition ${
+                                    isSelected
+                                        ? "bg-red-50 font-semibold text-red-600"
+                                        : "text-slate-700 hover:bg-red-50 hover:text-red-600"
+                                }`}
+                            >
+                                {year}
+                            </button>
+                        );
+                    })}
+                </div>
+            </>
+        )}
+    </div>
+</div>
                                     </div>
                                 </div>
                             </div>
