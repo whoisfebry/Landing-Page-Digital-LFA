@@ -235,7 +235,7 @@ export default function Statistik() {
                 aria-labelledby="statistik-title"
                 className="relative mb-25 scroll-mt-15 px-0 py-0 sm:scroll-mt-28 lg:scroll-mt-32"
             >
-                <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-8 sm:rounded-[36px] sm:px-8 sm:py-10 lg:rounded-[44px] lg:px-12 lg:py-12">
+                <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-8 sm:rounded-[36px] sm:px-8 sm:py-10 lg:rounded-[50px] lg:px-12 lg:py-12">
                     <div className="mx-auto w-full max-w-7xl">
                         {/* HEADER */}
                         <motion.div
@@ -252,10 +252,11 @@ export default function Statistik() {
                             >
                                 Statistik Hulu Migas
                             </h2>
-
-                            <p className="mx-auto mt-2 max-w-none whitespace-nowrap text-[10px] leading-5 text-slate-500 sm:text-[11px]">
+                            
+                            <p className="mx-auto mt-2 max-w-none text-[10px] leading-4 text-slate-500 sm:text-[11px] sm:leading-5">
                                 Jelajahi indikator capaian sektor hulu migas berdasarkan kategori dan periode yang tersedia.
                             </p>
+
                         </motion.div>
 
                         {/* MAIN PANEL */}

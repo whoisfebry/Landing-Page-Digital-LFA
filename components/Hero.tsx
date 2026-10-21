@@ -1,11 +1,60 @@
+"use client";
+
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+    const reduceMotion = useReducedMotion();
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: reduceMotion ? 0 : 0.12,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: reduceMotion
+            ? { opacity: 1, y: 0 }
+            : { opacity: 0, y: 18 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: reduceMotion ? 0 : 0.65,
+                ease: "easeOut" as const,
+            },
+        },
+    };
+    
+    const [preloaderComplete, setPreloaderComplete] = useState(false);
+
+    useEffect(() => {
+        const handlePreloaderComplete = () => {
+            setPreloaderComplete(true);
+        };
+
+        window.addEventListener(
+            "preloaderComplete",
+            handlePreloaderComplete
+        );
+
+        return () => {
+            window.removeEventListener(
+                "preloaderComplete",
+                handlePreloaderComplete
+            );
+        };
+    }, []);
+
     return (
         <section
-            id="home"
-            className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
-        >
+    id="home"
+    className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden rounded-b-[50px] bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
+>
             {/* Background Image */}
             <img
                 src="/images/people.png"
@@ -27,22 +76,37 @@ export default function Hero() {
 
             {/* Hero Content */}
             <div className="mx-auto flex w-full max-w-[1440px] items-center px-5 py-28 sm:px-8 sm:py-32 md:px-10 lg:px-16 lg:py-24 xl:px-20">
-                <div className="w-full max-w-[580px]">
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate={preloaderComplete ? "visible" : "hidden"}
+                    className="w-full max-w-[580px]"
+                >
                     {/* Label */}
-                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 backdrop-blur-md sm:mb-6">
+                    <motion.div
+                        variants={itemVariants}
+                        className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 backdrop-blur-md sm:mb-6"
+                    >
                         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
+
                         <span className="text-[11px] font-medium tracking-wide text-white/90 sm:text-xs">
                             Informasi publik
                         </span>
-                    </div>
+                    </motion.div>
 
                     {/* Main Title */}
-                    <h1 className="text-[clamp(2.25rem,6vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.045em] text-white">
+                    <motion.h1
+                        variants={itemVariants}
+                        className="text-[clamp(2.25rem,6vw,4.25rem)] font-bold leading-[1.05] tracking-[-0.045em] text-white"
+                    >
                         Digital LFA
-                    </h1>
+                    </motion.h1>
 
                     {/* Program Identity */}
-                    <div className="mt-4 flex flex-wrap items-center gap-x-2.5 gap-y-2 text-xs sm:gap-3 sm:text-sm">
+                    <motion.div
+                        variants={itemVariants}
+                        className="mt-4 flex flex-wrap items-center gap-x-2.5 gap-y-2 text-xs sm:gap-3 sm:text-sm"
+                    >
                         <span className="font-semibold text-red-500">
                             SKK Migas
                         </span>
@@ -52,25 +116,34 @@ export default function Hero() {
                         <span className="text-white/75">
                             Program Pengembangan Masyarakat
                         </span>
-                    </div>
+                    </motion.div>
 
                     {/* Headline */}
-                    <h2 className="mt-6 max-w-[510px] text-[clamp(1.125rem,2.5vw,1.75rem)] font-bold leading-snug tracking-[-0.025em] text-white sm:mt-8">
+                    <motion.h2
+                        variants={itemVariants}
+                        className="mt-6 max-w-[510px] text-[clamp(1.125rem,2.5vw,1.75rem)] font-bold leading-snug tracking-[-0.025em] text-white sm:mt-8"
+                    >
                         Pengelolaan Program yang Terstruktur dan Transparan.
-                    </h2>
+                    </motion.h2>
 
                     {/* Description */}
-                    <p className="mt-4 max-w-[490px] text-sm leading-6 text-white/75 sm:text-[15px] sm:leading-7">
+                    <motion.p
+                        variants={itemVariants}
+                        className="mt-4 max-w-[490px] text-sm leading-6 text-white/75 sm:text-[15px] sm:leading-7"
+                    >
                         Digital LFA mendukung pencatatan dan penelusuran
                         informasi program Pengembangan Masyarakat secara
                         sistematis, mulai dari perencanaan hingga evaluasi.
-                    </p>
+                    </motion.p>
 
                     {/* Action Buttons */}
-                    <div className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
+                    <motion.div
+                        variants={itemVariants}
+                        className="mt-7 flex w-full flex-col gap-3 sm:mt-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center"
+                    >
                         <Link
                             href="#tentang"
-                            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-red-400/40 bg-red-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-red-950/20 transition-colors duration-200 hover:border-red-300 hover:bg-red-700 active:bg-red-800 sm:w-auto"
+                            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-red-400/40 bg-red-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-red-950/20 transition-all duration-200 hover:-translate-y-0.5 hover:border-red-300 hover:bg-red-700 hover:shadow-lg active:translate-y-0 active:bg-red-800 sm:w-auto"
                         >
                             Pelajari Digital LFA
                         </Link>
@@ -79,12 +152,12 @@ export default function Hero() {
                             href="https://www.skkmigas.go.id/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/[0.06] px-5 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-white/15 sm:w-auto"
+                            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/[0.06] px-5 py-3 text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/15 active:translate-y-0 sm:w-auto"
                         >
                             Kunjungi SKK Migas
                         </a>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

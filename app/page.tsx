@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import Preloader from "@/components/Preloader";
 import Statistik from "@/components/Statistik";
+// import Capaian from "@/components/Capaian";
 
 export default function Home() {
     return (
@@ -18,6 +19,7 @@ export default function Home() {
             <Preloader />
             <Navbar />
             <Hero />
+            {/* <Capaian /> */}
             <Tentang />
             <Tujuan />
             <Untuksiapa />

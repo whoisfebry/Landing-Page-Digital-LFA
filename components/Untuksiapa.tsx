@@ -55,7 +55,7 @@ export default function Untuksiapa() {
             className="relative isolate scroll-mt-15 overflow-hidden bg-white px-0 py-0 sm:scroll-mt-28 lg:scroll-mt-32"
         >
             {/* PANEL ABU-ABU FULL WIDTH */}
-            <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-10 sm:rounded-[36px] sm:px-8 sm:py-12 lg:rounded-[44px] lg:px-12 lg:py-14">
+            <div className="relative w-full overflow-hidden rounded-[28px] bg-slate-100 px-5 py-10 sm:rounded-[36px] sm:px-8 sm:py-12 lg:rounded-[50px] lg:px-12 lg:py-14">
                 <div className="mx-auto w-full max-w-6xl">
                     {/* JUDUL DAN DESKRIPSI */}
                     <motion.div

@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Menu, X, ChevronDown, ExternalLink } from "lucide-react";
@@ -44,18 +45,19 @@ export default function Navbar() {
     // Menyesuaikan menu aktif berdasarkan URL saat halaman dibuka.
     useEffect(() => {
         const syncActiveLink = () => {
-            const currentPath = window.location.pathname
-                .replace(/^\/+|\/+$/g, "");
+            const currentPath = window.location.pathname.replace(
+                /^\/+|\/+$/g,
+                ""
+            );
 
             const matchingLink = navLinks.find(
-                (link) => link.href === currentPath,
+                (link) => link.href === currentPath
             );
 
             setActiveLink(matchingLink?.href ?? "");
         };
 
         syncActiveLink();
-
         window.addEventListener("popstate", syncActiveLink);
 
         return () => {
@@ -65,8 +67,8 @@ export default function Navbar() {
 
     // Navigasi ke section sekaligus mengubah URL tanpa tanda #.
     const handleNavigation = (
-        event: React.MouseEvent<HTMLAnchorElement>,
-        id: string,
+        event: MouseEvent<HTMLAnchorElement>,
+        id: string
     ) => {
         event.preventDefault();
 
@@ -83,7 +85,7 @@ export default function Navbar() {
 
     // Kembali ke halaman utama melalui logo.
     const handleLogoClick = (
-        event: React.MouseEvent<HTMLAnchorElement>,
+        event: MouseEvent<HTMLAnchorElement>
     ) => {
         event.preventDefault();
 
@@ -102,7 +104,7 @@ export default function Navbar() {
         <header className="fixed left-1/2 top-3 z-50 w-[calc(100%-1.5rem)] -translate-x-1/2 sm:top-5 sm:w-max sm:max-w-[calc(100%-2.5rem)]">
             <div className="relative">
                 {/* Navbar Utama */}
-                <nav className="w-full rounded-full border border-white/80 bg-white/65 px-3 py-2 text-slate-800 shadow-lg shadow-slate-900/5 backdrop-blur-xl sm:w-auto sm:px-4">
+                <nav className="w-full rounded-full border border-slate-200/90 bg-white/95 px-3 py-2 text-slate-800 shadow-lg shadow-slate-900/[0.08] backdrop-blur-xl sm:w-auto sm:px-4">
                     <div className="flex items-center justify-between gap-3 sm:justify-start sm:gap-9 lg:gap-10">
                         {/* Logo */}
                         <a
@@ -136,15 +138,16 @@ export default function Navbar() {
                                         aria-current={
                                             isActive ? "page" : undefined
                                         }
-                                        className={`relative isolate whitespace-nowrap rounded-full px-3 py-2 text-[11px] transition-colors duration-200 xl:px-3.5 ${isActive
+                                        className={`relative isolate whitespace-nowrap rounded-full px-3 py-2 text-[11px] transition-colors duration-200 xl:px-3.5 ${
+                                            isActive
                                                 ? "font-semibold text-red-600"
-                                                : "text-slate-800 font-semibold hover:text-red-600"
-                                            }`}
+                                                : "font-semibold text-slate-700 hover:text-red-600"
+                                        }`}
                                     >
                                         {isActive && (
                                             <motion.span
                                                 layoutId="navbar-rubber-indicator"
-                                                className="absolute inset-0 -z-10 rounded-full border border-white/80 bg-white/40 shadow-sm backdrop-blur-md"
+                                                className="absolute inset-0 -z-10 rounded-full border border-red-100 bg-red-50 shadow-sm"
                                                 transition={rubberTransition}
                                             />
                                         )}
@@ -165,14 +168,15 @@ export default function Navbar() {
                                     setIsPortalOpen(!isPortalOpen)
                                 }
                                 aria-expanded={isPortalOpen}
-                                className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border border-white/80 bg-white/40 px-3 py-2 text-[10px] font-semibold text-slate-800 shadow-sm transition-colors hover:bg-white/60"
+                                className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-[10px] font-semibold text-slate-700 shadow-sm transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
                             >
                                 Portal pengguna
 
                                 <ChevronDown
                                     size={12}
-                                    className={`transition-transform duration-200 ${isPortalOpen ? "rotate-180" : ""
-                                        }`}
+                                    className={`transition-transform duration-200 ${
+                                        isPortalOpen ? "rotate-180" : ""
+                                    }`}
                                 />
                             </button>
 
@@ -194,16 +198,18 @@ export default function Navbar() {
                                         scale: 0.97,
                                     }}
                                     transition={{ duration: 0.18 }}
-                                    className="absolute right-0 top-full mt-5 w-48 overflow-hidden rounded-xl border border-white/70 bg-white/90 p-1.5 text-slate-800 font-semibold shadow-xl backdrop-blur-xl"
+                                    className="absolute right-0 top-full mt-5 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 font-semibold text-slate-800 shadow-xl shadow-slate-900/10"
                                 >
                                     {portalLinks.map((link) => (
                                         <a
                                             key={link.label}
                                             href={link.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             onClick={() =>
                                                 setIsPortalOpen(false)
                                             }
-                                            className="flex items-center justify-between rounded-lg px-3 py-2.5 text-xs transition-colors hover:bg-slate-100 hover:text-red-600"
+                                            className="flex items-center justify-between rounded-lg px-3 py-2.5 text-xs transition-colors hover:bg-red-50 hover:text-red-600"
                                         >
                                             {link.label}
                                             <ExternalLink size={13} />
@@ -224,7 +230,7 @@ export default function Navbar() {
                                 setIsMenuOpen(!isMenuOpen);
                                 setIsPortalOpen(false);
                             }}
-                            className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/80 bg-white/40 text-slate-800 font-semibold shadow-sm transition-colors hover:bg-white/70 lg:hidden"
+                            className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 shadow-sm transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 lg:hidden"
                         >
                             <motion.span
                                 key={isMenuOpen ? "close" : "open"}
@@ -265,7 +271,7 @@ export default function Navbar() {
                         transition={rubberTransition}
                         className="absolute left-0 right-0 top-full mt-3 lg:hidden"
                     >
-                        <div className="max-h-[calc(100svh-100px)] w-full overflow-y-auto rounded-2xl border border-white/80 bg-white/90 p-3 text-slate-800 shadow-xl shadow-slate-900/5 backdrop-blur-xl">
+                        <div className="max-h-[calc(100svh-100px)] w-full overflow-y-auto rounded-2xl border border-slate-200 bg-white p-3 text-slate-800 shadow-xl shadow-slate-900/10">
                             {/* Navigasi Mobile */}
                             <div className="space-y-1">
                                 {navLinks.map((link) => {
@@ -279,21 +285,22 @@ export default function Navbar() {
                                             onClick={(event) =>
                                                 handleNavigation(
                                                     event,
-                                                    link.href,
+                                                    link.href
                                                 )
                                             }
                                             aria-current={
                                                 isActive ? "page" : undefined
                                             }
-                                            className={`relative isolate flex min-h-10 items-center overflow-hidden rounded-xl px-3 py-2.5 text-sm transition-colors ${isActive
+                                            className={`relative isolate flex min-h-10 items-center overflow-hidden rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                                                isActive
                                                     ? "font-semibold text-red-600"
-                                                    : "font-medium text-slate-700 hover:text-red-600"
-                                                }`}
+                                                    : "font-medium text-slate-700 hover:bg-slate-50 hover:text-red-600"
+                                            }`}
                                         >
                                             {isActive && (
                                                 <motion.span
                                                     layoutId="navbar-rubber-indicator"
-                                                    className="absolute inset-0 -z-10 rounded-xl border border-white/80 bg-white/40 shadow-sm backdrop-blur-md"
+                                                    className="absolute inset-0 -z-10 rounded-xl border border-red-100 bg-red-50"
                                                     transition={rubberTransition}
                                                 />
                                             )}
@@ -307,8 +314,8 @@ export default function Navbar() {
                             </div>
 
                             {/* Portal Mobile */}
-                            <div className="mt-2 border-t border-slate-200/70 pt-2">
-                                <p className="px-3 py-2 text-[11px] font-semibold text-slate-500">
+                            <div className="mt-2 border-t border-slate-200 pt-2">
+                                <p className="px-3 py-2 text-[11px] font-semibold text-slate-700">
                                     Portal pengguna
                                 </p>
 
@@ -316,8 +323,10 @@ export default function Navbar() {
                                     <a
                                         key={link.label}
                                         href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         onClick={closeMenus}
-                                        className="flex min-h-10 items-center justify-between rounded-xl px-3 py-2.5 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-red-600"
+                                        className="flex min-h-10 items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:bg-red-50 hover:text-red-600"
                                     >
                                         {link.label}
                                         <ExternalLink size={14} />

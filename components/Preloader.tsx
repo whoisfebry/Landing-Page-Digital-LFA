@@ -36,7 +36,11 @@ export default function Preloader() {
     }, []);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence
+            onExitComplete={() => {
+                window.dispatchEvent(new Event("preloaderComplete"));
+            }}
+        >
             {loading && (
                 <motion.div
                     className="preloader fixed inset-0 z-[9999] flex items-center justify-center bg-[#1b2d43]"
