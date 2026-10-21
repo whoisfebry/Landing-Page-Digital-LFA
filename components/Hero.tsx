@@ -53,7 +53,7 @@ export default function Hero() {
     return (
         <section
     id="home"
-    className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden rounded-b-[50px] bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
+    className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
 >
             {/* Background Image */}
             <img
