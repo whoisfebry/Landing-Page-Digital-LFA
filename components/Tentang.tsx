@@ -944,27 +944,29 @@ function IndonesiaDotMap() {
 
             {showSuggestions && suggestions.length > 0 && (
                 <div
-                    className="absolute left-2 right-12 top-[43px] z-30 max-h-36 max-w-[250px] overflow-y-auto rounded-md border border-slate-200 bg-white shadow-lg sm:left-3 sm:right-14 sm:top-[49px] sm:max-h-44 sm:max-w-[290px] sm:rounded-lg lg:left-4 lg:top-[52px] lg:max-w-[320px]"
+                    className="absolute left-2 right-12 top-[43px] z-30 max-h-36 max-w-[250px] overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg sm:left-3 sm:right-14 sm:top-[49px] sm:max-h-44 sm:max-w-[290px] sm:rounded-lg lg:left-4 lg:top-[65px] lg:max-w-[320px]"
                     role="listbox"
                     aria-label="Saran lokasi"
                 >
-                    {suggestions.map((item, index) => (
-                        <button
-                            key={`${item.placeId}-${index}`}
-                            type="button"
-                            role="option"
-                            aria-selected="false"
-                            onClick={() => void selectLocation(item)}
-                            className="block w-full cursor-pointer border-b border-slate-100 px-2 py-1.5 text-left last:border-b-0 hover:bg-red-50 focus:bg-red-50 focus:outline-none sm:px-2.5 sm:py-2"
-                        >
-                            <span className="block truncate text-[10px] font-semibold leading-4 text-slate-800 sm:text-[11px] sm:leading-4 lg:text-xs">
-                                {item.name || item.description || "Lokasi"}
-                            </span>
-                            <span className="mt-0.5 block line-clamp-2 text-[9px] leading-3.5 text-slate-500 sm:text-[10px] sm:leading-4">
-                                {item.address || item.description}
-                            </span>
-                        </button>
-                    ))}
+                    <div className="max-h-36 overflow-x-hidden overflow-y-auto overscroll-contain sm:max-h-44">
+                        {suggestions.map((item, index) => (
+                            <button
+                                key={`${item.placeId}-${index}`}
+                                type="button"
+                                role="option"
+                                aria-selected="false"
+                                onClick={() => void selectLocation(item)}
+                                className="block w-full cursor-pointer border-b border-slate-100 px-2 py-1.5 text-left last:border-b-0 hover:bg-red-50 focus:bg-red-50 focus:outline-none sm:px-2.5 sm:py-2"
+                            >
+                                <span className="block truncate text-[10px] font-semibold leading-4 text-slate-800 sm:text-[11px] sm:leading-4 lg:text-xs">
+                                    {item.name || item.description || "Lokasi"}
+                                </span>
+                                <span className="mt-0.5 block line-clamp-2 text-[9px] leading-3.5 text-slate-500 sm:text-[10px] sm:leading-4">
+                                    {item.address || item.description}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
 
