@@ -99,7 +99,6 @@ export default function AIChatbot() {
     // Fokuskan input ketika chatbot dibuka.
     useEffect(() => {
         if (isOpen) {
-            inputRef.current?.focus();
             setShowTip(false);
         } else if (hasReachedFooter) {
             // Setelah Footer pernah dicapai, tombol chatbot
@@ -326,11 +325,10 @@ export default function AIChatbot() {
                         {messages.map((message) => (
                             <div
                                 key={message.id}
-                                className={`flex items-end gap-2 ${
-                                    message.sender === "user"
+                                className={`flex items-end gap-2 ${message.sender === "user"
                                         ? "justify-end"
                                         : "justify-start"
-                                }`}
+                                    }`}
                             >
                                 {/* Logo pada pesan chatbot */}
                                 {message.sender === "bot" && (
@@ -346,11 +344,10 @@ export default function AIChatbot() {
                                 )}
 
                                 <div
-                                    className={`max-w-[88%] rounded-xl px-2.5 py-2 text-[11px] leading-relaxed sm:max-w-[86%] sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${
-                                        message.sender === "user"
+                                    className={`max-w-[88%] rounded-xl px-2.5 py-2 text-[11px] leading-relaxed sm:max-w-[86%] sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${message.sender === "user"
                                             ? "rounded-br-md bg-red-600 text-white"
                                             : "rounded-bl-md border border-slate-200 bg-white text-slate-700 shadow-sm"
-                                    }`}
+                                        }`}
                                 >
                                     <p className="whitespace-pre-line">
                                         {message.text}
@@ -358,11 +355,10 @@ export default function AIChatbot() {
 
                                     {/* Jam pesan */}
                                     <p
-                                        className={`mt-1 text-right text-[10px] leading-none ${
-                                            message.sender === "user"
+                                        className={`mt-1 text-right text-[10px] leading-none ${message.sender === "user"
                                                 ? "text-white/75"
                                                 : "text-slate-400"
-                                        }`}
+                                            }`}
                                     >
                                         {message.time}
                                     </p>
@@ -430,7 +426,7 @@ export default function AIChatbot() {
                                 }
                                 placeholder="Tulis pertanyaan..."
                                 aria-label="Tulis pertanyaan"
-                                className="min-w-0 flex-1 bg-transparent py-1 text-xs text-slate-700 outline-none placeholder:text-slate-400"
+                                className="min-w-0 flex-1 bg-transparent py-1 text-base text-slate-700 outline-none placeholder:text-slate-400 sm:text-xs"
                             />
 
                             <button
