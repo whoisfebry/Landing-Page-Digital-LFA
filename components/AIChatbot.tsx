@@ -424,7 +424,7 @@ export default function AIChatbot() {
                                 onChange={(event) => setInput(event.target.value)}
                                 placeholder="Tulis pertanyaan..."
                                 aria-label="Tulis pertanyaan"
-                                className="min-w-0 flex-1 bg-transparent py-1 text-base text-slate-700 outline-none placeholder:text-slate-400 sm:text-xs"
+                                className="min-w-0 flex-1 bg-transparent py-0.5 text-base text-slate-700 outline-none placeholder:text-slate-400 sm:py-1 sm:text-xs"
                             />
 
                             <button
