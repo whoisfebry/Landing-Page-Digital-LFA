@@ -421,9 +421,7 @@ export default function AIChatbot() {
                                 ref={inputRef}
                                 type="text"
                                 value={input}
-                                onChange={(event) =>
-                                    setInput(event.target.value)
-                                }
+                                onChange={(event) => setInput(event.target.value)}
                                 placeholder="Tulis pertanyaan..."
                                 aria-label="Tulis pertanyaan"
                                 className="min-w-0 flex-1 bg-transparent py-1 text-base text-slate-700 outline-none placeholder:text-slate-400 sm:text-xs"
