@@ -187,7 +187,7 @@ export default function Manfaat() {
                         {/* Accordion Gallery */}
                         <motion.div
                             {...reveal(0.12)}
-                            className="mx-auto mt-5 w-full max-w-4xl sm:mt-6"
+                            className="mx-auto mt-6 w-full max-w-5xl sm:mt-7"
                         >
                             <AccordionGallery
                                 items={programGallery}
@@ -204,7 +204,7 @@ export default function Manfaat() {
                                 parallax={0.2}
                                 tilt={0}
                                 stagger={0.06}
-                                height={300}
+                                height={360}
                                 gap={7}
                                 radius={10}
                             />

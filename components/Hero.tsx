@@ -7,29 +7,6 @@ import { useEffect, useState } from "react";
 export default function Hero() {
     const reduceMotion = useReducedMotion();
 
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: {
-                staggerChildren: reduceMotion ? 0 : 0.12,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: reduceMotion
-            ? { opacity: 1, y: 0 }
-            : { opacity: 0, y: 18 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: reduceMotion ? 0 : 0.65,
-                ease: "easeOut" as const,
-            },
-        },
-    };
-    
     const [preloaderComplete, setPreloaderComplete] = useState(false);
 
     useEffect(() => {
@@ -50,11 +27,34 @@ export default function Hero() {
         };
     }, []);
 
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: reduceMotion ? 0 : 0.08,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: reduceMotion
+            ? { opacity: 1, y: 0 }
+            : { opacity: 0, y: 10 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: reduceMotion ? 0 : 0.45,
+                ease: "easeOut" as const,
+            },
+        },
+    };
+
     return (
         <section
-    id="home"
-    className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
->
+            id="home"
+            className="relative isolate flex min-h-[100svh] w-full items-center overflow-hidden bg-[#1b2d43] lg:min-h-[max(745px,100svh)]"
+        >
             {/* Background Image */}
             <img
                 src="/images/people.png"

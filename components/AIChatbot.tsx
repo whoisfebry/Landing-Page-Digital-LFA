@@ -189,7 +189,7 @@ export default function AIChatbot() {
                             onClick={() => setIsOpen(true)}
                             className="cursor-pointer text-left text-[10px] font-semibold leading-snug sm:text-xs sm:leading-relaxed"
                         >
-                            Butuh bantuan? Chat dengan Asisten Digital LFA.
+                            Butuh bantuan? Chat dengan kami.
                         </button>
 
                         <button

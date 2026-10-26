@@ -49,13 +49,13 @@ export default function Preloader() {
                         reduceMotion
                             ? { opacity: 0 }
                             : {
-                                  opacity: 0,
-                                  scale: 1.05,
-                                  transition: {
-                                      duration: 0.4,
-                                      ease: "easeInOut",
-                                  },
-                              }
+                                opacity: 0,
+                                scale: 1.05,
+                                transition: {
+                                    duration: 0.4,
+                                    ease: "easeInOut",
+                                },
+                            }
                     }
                 >
                     <div className="flex flex-col items-center">
@@ -69,10 +69,10 @@ export default function Preloader() {
                                     reduceMotion
                                         ? undefined
                                         : {
-                                              rotate: [
-                                                  0, 180, 90, 360, 180, 540,
-                                              ],
-                                          }
+                                            rotate: [
+                                                0, 180, 90, 360, 180, 540,
+                                            ],
+                                        }
                                 }
                                 transition={{
                                     duration: 6,
@@ -101,10 +101,10 @@ export default function Preloader() {
                                     reduceMotion
                                         ? undefined
                                         : {
-                                              rotate: [
-                                                  0, -120, -300, -180, -450,
-                                              ],
-                                          }
+                                            rotate: [
+                                                0, -120, -300, -180, -450,
+                                            ],
+                                        }
                                 }
                                 transition={{
                                     duration: 5,
@@ -133,10 +133,10 @@ export default function Preloader() {
                                     reduceMotion
                                         ? undefined
                                         : {
-                                              rotate: [
-                                                  0, 90, 270, 180, 360,
-                                              ],
-                                          }
+                                            rotate: [
+                                                0, 90, 270, 180, 360,
+                                            ],
+                                        }
                                 }
                                 transition={{
                                     duration: 4,
@@ -165,9 +165,9 @@ export default function Preloader() {
                                     reduceMotion
                                         ? undefined
                                         : {
-                                              scale: [1, 1.05, 1],
-                                              opacity: [1, 0.9, 1],
-                                          }
+                                            scale: [1, 1.05, 1],
+                                            opacity: [1, 0.9, 1],
+                                        }
                                 }
                                 transition={{
                                     duration: 2,
@@ -176,13 +176,13 @@ export default function Preloader() {
                                 }}
                             >
                                 <Image
-    src="/images/logo1.png"
-    alt="Logo Digital LFA"
-    width={64}
-    height={64}
-    priority
-    className="h-10 w-10 object-contain sm:h-12 sm:w-12"
-/>
+                                    src="/images/logo1.png"
+                                    alt="Logo Digital LFA"
+                                    width={64}
+                                    height={64}
+                                    priority
+                                    className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+                                />
                             </motion.div>
                         </div>
 
@@ -222,12 +222,12 @@ export default function Preloader() {
                                     reduceMotion
                                         ? { width: "100%" }
                                         : {
-                                              width: [
-                                                  "0%",
-                                                  "75%",
-                                                  "90%",
-                                              ],
-                                          }
+                                            width: [
+                                                "0%",
+                                                "75%",
+                                                "90%",
+                                            ],
+                                        }
                                 }
                                 transition={{
                                     duration: 1.5,

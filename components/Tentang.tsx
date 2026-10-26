@@ -722,6 +722,7 @@ function IndonesiaDotMap() {
                 zoom: 17,
                 pitch: 62,
                 bearing: -25,
+                offset: [-60, 120],
                 duration: reduceMotion ? 0 : 2600,
                 easing: (t: number) =>
                     t < 0.5
@@ -1260,8 +1261,8 @@ export default function Tentang() {
                                                         <span
                                                             aria-hidden="true"
                                                             className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
-                                                                    ? "animate-[ripple_1.8s_ease-out_infinite]"
-                                                                    : "opacity-0"
+                                                                ? "animate-[ripple_1.8s_ease-out_infinite]"
+                                                                : "opacity-0"
                                                                 }`}
                                                             style={{
                                                                 backgroundColor:
@@ -1272,8 +1273,8 @@ export default function Tentang() {
                                                         <span
                                                             aria-hidden="true"
                                                             className={`pointer-events-none absolute inset-0 rounded-full ${isActive && !reduceMotion
-                                                                    ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
-                                                                    : "opacity-0"
+                                                                ? "animate-[ripple_1.8s_ease-out_0.6s_infinite]"
+                                                                : "opacity-0"
                                                                 }`}
                                                             style={{
                                                                 backgroundColor:
@@ -1308,8 +1309,8 @@ export default function Tentang() {
 
                                                 <div
                                                     className={`group relative ml-6 flex min-h-[155px] w-[calc(100%-1.5rem)] flex-col rounded-xl border bg-white p-4 transition-colors duration-300 sm:min-h-[170px] sm:p-5 md:ml-0 md:min-h-[205px] md:w-full md:p-4 lg:min-h-[190px] lg:p-5 ${isActive
-                                                            ? "border-red-200"
-                                                            : "border-slate-200 hover:border-red-200"
+                                                        ? "border-red-200"
+                                                        : "border-slate-200 hover:border-red-200"
                                                         }`}
                                                 >
                                                     <button
@@ -1322,8 +1323,8 @@ export default function Tentang() {
                                                         <div className="flex w-full items-start justify-between gap-2">
                                                             <span
                                                                 className={`text-2xl font-bold leading-none tracking-[-0.045em] transition-colors duration-300 sm:text-3xl md:text-4xl ${isReached
-                                                                        ? "text-red-600"
-                                                                        : "text-slate-300 group-hover:text-red-600"
+                                                                    ? "text-red-600"
+                                                                    : "text-slate-300 group-hover:text-red-600"
                                                                     }`}
                                                             >
                                                                 {stage.number}
@@ -1332,8 +1333,8 @@ export default function Tentang() {
                                                             <span
                                                                 aria-hidden="true"
                                                                 className={`mt-0.5 flex h-5 w-5 items-center justify-center rounded-full text-[10px] transition-colors duration-300 sm:h-6 sm:w-6 sm:text-xs ${showGreenCheck
-                                                                        ? "bg-emerald-600 text-white"
-                                                                        : "bg-slate-100 text-slate-400"
+                                                                    ? "bg-emerald-600 text-white"
+                                                                    : "bg-slate-100 text-slate-400"
                                                                     }`}
                                                             >
                                                                 {showGreenCheck ? "✓" : "↗"}
@@ -1342,8 +1343,8 @@ export default function Tentang() {
 
                                                         <h3
                                                             className={`mt-3 text-[13px] font-bold tracking-tight sm:mt-4 sm:text-sm md:text-base ${isReached
-                                                                    ? "text-slate-900"
-                                                                    : "text-slate-700"
+                                                                ? "text-slate-900"
+                                                                : "text-slate-700"
                                                                 }`}
                                                         >
                                                             {stage.title}
@@ -1357,12 +1358,12 @@ export default function Tentang() {
                                                     <div className="mt-auto flex items-center justify-between gap-2 pt-3 sm:pt-4">
                                                         <span
                                                             className={`text-[9px] font-semibold uppercase tracking-[0.1em] sm:text-[10px] sm:tracking-[0.12em] ${isCompleted
-                                                                    ? "text-emerald-600"
-                                                                    : isActive
-                                                                        ? "text-red-600"
-                                                                        : isReached
-                                                                            ? "text-emerald-600"
-                                                                            : "text-slate-400"
+                                                                ? "text-emerald-600"
+                                                                : isActive
+                                                                    ? "text-red-600"
+                                                                    : isReached
+                                                                        ? "text-emerald-600"
+                                                                        : "text-slate-400"
                                                                 }`}
                                                         >
                                                             {isCompleted
