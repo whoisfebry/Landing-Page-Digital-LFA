@@ -719,10 +719,10 @@ function IndonesiaDotMap() {
 
             map.flyTo({
                 center: [longitude, latitude],
-                zoom: 17,
+                zoom: 16.5,
                 pitch: 62,
                 bearing: -25,
-                offset: [-60, 120],
+                offset: [-80, 80],
                 duration: reduceMotion ? 0 : 2600,
                 easing: (t: number) =>
                     t < 0.5
@@ -732,7 +732,7 @@ function IndonesiaDotMap() {
             });
 
             if (!reduceMotion) {
-                const rotationBearings = [-5, 15, -5, -25, -5, 15, -5, -25];
+                const rotationBearings = [-5, 15, -5, -20, -5, 15, -5, -20];
 
                 const rotateNext = (index: number) => {
                     if (
